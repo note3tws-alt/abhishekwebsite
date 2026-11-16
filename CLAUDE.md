@@ -25,6 +25,7 @@ Preview locally: `python3 tools/serve.py` → http://localhost:8000. (Internal l
 | File | Role |
 |---|---|
 | `src/pages.html` | All page content. Each page is a `<!--PAGE:id-->…<!--/PAGE-->` block; shared pieces are `<!--PART:name-->…<!--/PART-->` blocks; plus `<!--HEADER-->` and `<!--FOOTER-->`. |
+| `src/landing.py` | The six service pages (`/services/...`) and four case studies (`/case-studies/...`) as data; build.py renders them, their FAQs and structured data. |
 | `src/posts.py` | The six blog articles (title, SEO title, description, category, HTML body). `build.py` turns each into a page plus the blog index. |
 | `src/styles.css` | All styles. Design tokens are at the top in `:root`. Later rules intentionally override earlier ones (the file grew by appending), so check the end of the file before assuming a rule is final. |
 | `src/main.js` | Page behaviour: hash routing (preview only), reveal-on-scroll, hero name animation, counters, mobile menu, contact form, copy buttons. |
@@ -108,12 +109,13 @@ Keep all copy consistent with these. Do not invent clients, numbers, testimonial
 - **Google Search Console:** domain property verified by DNS TXT record (keep that record if DNS moves); `https://abhishekreally.com/sitemap.xml` submitted. After big content changes, request indexing for the changed URLs.
 - Old WordPress URLs (/about/, /services/, /contact/) and /work.html redirect via netlify.toml.
 
+- **SEO build (16 Nov 2026):** Abhishek confirmed he takes work from Dubai and anywhere in Kerala, and approved case studies. Added `/digital-marketing-expert-kerala`, `/freelance-digital-marketer-dubai`, six `/services/*` pages, `/case-studies` + 4 studies, a "Work" menu item, a Locations footer column, and qualifying fields on the contact form. Nested pages are `services/x.html` next to `services.html`; netlify.toml force-rewrites `/services` and `/case-studies` to the hub pages. Case studies publish no figures other than the archived 3.21M followers.
+
 ## Open items
 
 - Confirm the WhatsApp number (+971 58 861 5423 assumed).
 - Current role after Zee Real Estate (Oct 2026) — the journey currently ends there.
 - Real certifications (Google Ads, Meta Blueprint, etc.) and real client testimonials, if available.
-- Confirm Thalassery / Taliparamba as service areas.
 - Google Business Profile only with a genuine address.
 
 ## Working style Abhishek prefers

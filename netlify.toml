@@ -13,6 +13,22 @@
   from = "/services/"
   to = "/services.html"
   status = 301
+# /services and /case-studies are pages AND folders (services.html + services/meta-ads.html).
+# Force the bare paths to the hub pages so Netlify never looks for a folder index.
+[[redirects]]
+  from = "/services"
+  to = "/services.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/case-studies"
+  to = "/case-studies.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/work"
+  to = "/case-studies"
+  status = 301
 [[redirects]]
   from = "/work.html"
   to = "/clients.html"

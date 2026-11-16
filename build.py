@@ -68,6 +68,123 @@ for _p in POSTS:
 </section>
 <!--/PAGE-->
 """
+# ---- service pages and case studies (data in src/landing.py) ----
+from landing import SERVICE_PAGES, CASE_STUDIES, ROAS_NOTE
+SVC_BY = {s['id']: s for s in SERVICE_PAGES}
+CS_BY = {c['id']: c for c in CASE_STUDIES}
+def _faq_html(items):
+    return ('<div class="faq" style="border-top:0;padding-top:0"><div class="faq-list" style="margin-top:0">' +
+            ''.join(f'<details{" open" if i == 0 else ""}><summary><span class="q">Q{i+1}</span>{q}<span class="pm"></span></summary><div class="ans">{a}</div></details>'
+                    for i, (q, a) in enumerate(items)) + '</div></div>')
+def _cs_card(c):
+    return (f'<a class="post-card" href="@{c["id"]}"><span class="pc-cat">{c["years"]} · {c["where"]}</span>'
+            f'<h3>{c["name"]}</h3><p>{c["excerpt"]}</p><span class="pc-meta">{c["role"]} · Read case study {{{{i:arrow}}}}</span></a>')
+for _s in SERVICE_PAGES:
+    _cells = ''.join(f'<div class="xcell">{{{{i:{ic}}}}}<h3>{h}</h3><p>{d}</p></div>' for ic, h, d in _s['incl'])
+    _steps = ''.join(f'<div class="step"><span class="n">{i+1}</span><h3>{h}</h3><p>{d}</p></div>' for i, (h, d) in enumerate(_s['steps']))
+    _for = ''.join(f'<li>{x}</li>' for x in _s['for'])
+    _roas = f'<div class="also">{{{{i:chart}}}}<span><b>About the ROAS figure:</b> {ROAS_NOTE}</span></div>' if _s['roas'] else ''
+    _rel = ' · '.join(f'<a class="v link" href="@{r}">{SVC_BY[r]["name"]}</a>' for r in _s['related'])
+    _gen += f"""
+<!--PAGE:{_s['id']}-->
+<section class="block page-hero">
+  <div class="left">
+    <div class="crumbs"><a href="@home">Home</a><span>/</span><a href="@services">Services</a><span>/</span><span>{_s['crumb']}</span></div>
+    <span class="pill">{_s['pill']}</span>
+    <h1>{_s['h1']}</h1>
+  </div>
+  <div class="right">
+    <p>{_s['lead']}</p>
+    <div class="btn-row"><a class="btn btn-hot" href="@contact">Discuss your project</a><a class="btn btn-line" href="@case-studies">See case studies</a></div>
+  </div>
+</section>
+{{{{stats}}}}
+
+<div class="gap"></div>
+
+<section class="block">
+  <div class="split-head"><h2>{_s['incl_h']}</h2><p class="muted">{_s['incl_p']}</p></div>
+  <div class="xgrid x3">{_cells}</div>
+  <div class="areas"><span class="label">Available for</span><span class="pill plain">Dubai &amp; the UAE</span><a class="pill plain" href="@kerala">Anywhere in Kerala</a><a class="pill plain" href="@freelance-dubai">Freelance &amp; project work</a></div>
+</section>
+
+<div class="gap"></div>
+
+<section class="block">
+  <div class="split-head"><h2>Who it’s for <span class="ghost">and how we’ll work.</span></h2><p class="muted">Clear steps, honest communication and results you can measure.</p></div>
+  <div class="svc-detail" style="border-top:1px solid var(--line)"><span class="n">Fit</span><div><h3>A good fit if you are</h3><p>Not sure it fits? Send a message and I’ll tell you honestly.</p></div><div><ul class="checks">{_for}</ul></div></div>
+  <div class="steps">{_steps}</div>
+</section>
+
+<div class="gap"></div>
+
+<section class="block">
+  <div class="split-head"><h2>Proof, <span class="ghost">from real work.</span></h2><p class="muted"><a class="v link" href="@case-studies">All case studies</a></p></div>
+  <div class="post-grid">{''.join(_cs_card(CS_BY[c]) for c in _s['proof'])}</div>
+  {_roas}
+</section>
+
+<div class="gap"></div>
+
+<section class="block">
+  <div class="split-head"><h2>{_s['name']}: <span class="ghost">common questions.</span></h2><p class="muted">I respond within 24 hours, 7 days a week.</p></div>
+  {_faq_html(_s['faq'])}
+  <div class="also">{{{{i:sliders}}}}<span><b>Related services:</b> {_rel}</span></div>
+</section>
+<!--/PAGE-->
+"""
+_cs_grid = ''.join(_cs_card(c) for c in CASE_STUDIES)
+_gen += f"""
+<!--PAGE:case-studies-->
+<section class="block page-hero">
+  <div class="left">
+    <div class="crumbs"><a href="@home">Home</a><span>/</span><span>Case studies</span></div>
+    <span class="pill">Work · Case studies</span>
+    <h1>Case studies <span class="ghost">from Dubai, Kerala and beyond.</span></h1>
+  </div>
+  <div class="right">
+    <p>What I did, what changed and what I learned, for each stage of my career. Each case study says clearly what was my own work and what was a team effort.</p>
+    <div class="btn-row"><a class="btn btn-hot" href="@contact">Start a project</a><a class="btn btn-line" href="@clients">All clients</a></div>
+  </div>
+</section>
+<section class="block" style="border-top:0"><div class="post-grid">{_cs_grid}</div>
+  <div class="also">{{{{i:check}}}}<span><b>How these are written:</b> no invented numbers. Where a business’s figures aren’t published, the case study says so instead of guessing.</span></div>
+</section>
+<!--/PAGE-->
+"""
+for _c in CASE_STUDIES:
+    _i = CASE_STUDIES.index(_c); _others = [CASE_STUDIES[(_i + k) % len(CASE_STUDIES)] for k in (1, 2, 3)]
+    _gen += f"""
+<!--PAGE:{_c['id']}-->
+<section class="block page-hero">
+  <div class="left">
+    <div class="crumbs"><a href="@home">Home</a><span>/</span><a href="@case-studies">Case studies</a><span>/</span><span>{_c['crumb']}</span></div>
+    <span class="pill">Case study · {_c['years']}</span>
+    <h1>{_c['h1']}</h1>
+  </div>
+  <div class="right"><p>{_c['lead']}</p></div>
+</section>
+<section class="block" style="border-top:0">
+  <div class="xgrid cs-facts">
+    <div class="xcell">{{{{i:team}}}}<h3>Role</h3><p>{_c['role']}</p></div>
+    <div class="xcell">{{{{i:cal}}}}<h3>When</h3><p>{_c['years']}</p></div>
+    <div class="xcell">{{{{i:pin}}}}<h3>Where</h3><p>{_c['where']}</p></div>
+    <div class="xcell">{{{{i:megaphone}}}}<h3>Channels</h3><p>{_c['channels']}</p></div>
+  </div>
+</section>
+<div class="gap"></div>
+<section class="block">
+  <article class="article">{_c['body']}
+    <div class="post-cta"><div><b>Want results like this for your brand?</b><span>I reply within 24 hours, 7 days a week.</span></div><a class="btn btn-hot" href="@contact">Contact Me {{{{i:arrow}}}}</a></div>
+  </article>
+</section>
+<div class="gap"></div>
+<section class="block">
+  <div class="split-head"><h2>More case studies <span class="ghost">to read next.</span></h2><p class="muted"><a class="v link" href="@case-studies">All case studies</a></p></div>
+  <div class="post-grid">{''.join(_cs_card(o) for o in _others)}</div>
+</section>
+<!--/PAGE-->
+"""
 _home_blog = ''.join(_card(p) for p in POSTS[:3])
 raw = raw.replace('{{home-blog}}', _home_blog)
 raw = raw.replace('\n<!--PAGE:thanks-->', _gen + '\n<!--PAGE:thanks-->', 1)
@@ -116,8 +233,13 @@ def grab(tag, name):
 header = re.search(r'<!--HEADER-->(.*?)<!--/HEADER-->', raw, re.S).group(1)
 footer = re.search(r'<!--FOOTER-->(.*?)<!--/FOOTER-->', raw, re.S).group(1)
 parts = {k: grab('PART', k) for k in re.findall(r'<!--PART:([\w-]+)-->', raw)}
-pages = ['home', 'about', 'services', 'clients', 'contact', 'kannur', 'kozhikode', 'blog'] + [p['id'] for p in POSTS]
-FILE_NAMES = {'home': 'index', 'kannur': 'digital-marketing-kannur', 'kozhikode': 'digital-marketing-kozhikode', 'blog': 'blog', **{p['id']: p['slug'] for p in POSTS}}
+pages = (['home', 'about', 'services'] + [s['id'] for s in SERVICE_PAGES] + ['case-studies'] + [c['id'] for c in CASE_STUDIES] +
+         ['clients', 'contact', 'kerala', 'kannur', 'kozhikode', 'freelance-dubai', 'blog'] + [p['id'] for p in POSTS])
+FILE_NAMES = {'home': 'index', 'kerala': 'digital-marketing-expert-kerala', 'kannur': 'digital-marketing-kannur', 'kozhikode': 'digital-marketing-kozhikode',
+              'freelance-dubai': 'freelance-digital-marketer-dubai', 'blog': 'blog', **{p['id']: p['slug'] for p in POSTS},
+              **{s['id']: s['slug'] for s in SERVICE_PAGES}, **{c['id']: c['slug'] for c in CASE_STUDIES}}
+# Main-menu item highlighted on each page (sub-pages light up their section)
+NAV_KEY = {**{s['id']: 'services' for s in SERVICE_PAGES}, 'case-studies': 'work', **{c['id']: 'work' for c in CASE_STUDIES}, **{p['id']: 'blog' for p in POSTS}}
 
 def fill(s):
     for _ in range(2):
@@ -220,9 +342,15 @@ DESCS = {
   'contact': 'Hire a freelance digital marketing expert in Dubai for Meta Ads, social media marketing, content and lead generation. Replies within 24 hours.',
 }
 DESCS['blog'] = 'Practical digital marketing guides on Meta Ads, SEO, social media and local marketing for businesses in Dubai, Kannur, Kozhikode and across Kerala.'
-for _p in POSTS:
+for _p in POSTS + SERVICE_PAGES + CASE_STUDIES:
     TITLES[_p['id']] = _p['seo_title']
     DESCS[_p['id']] = _p['desc']
+TITLES['kerala'] = 'Digital Marketing Expert in Kerala | Abhishek Prakash'
+DESCS['kerala'] = 'Digital marketing anywhere in Kerala: Meta Ads, social media, content and lead generation, from a strategist with Kannur roots and Dubai experience.'
+TITLES['freelance-dubai'] = 'Freelance Digital Marketer in Dubai | Abhishek Prakash'
+DESCS['freelance-dubai'] = 'Freelance digital marketer in Dubai for Meta Ads, lead generation, social media and content: by project, monthly or as a consultant. 7+ years in UAE & India.'
+TITLES['case-studies'] = 'Digital Marketing Case Studies | Abhishek Prakash'
+DESCS['case-studies'] = 'Case studies from Abhishek Prakash: @TheWorldStories (3.2M followers), Unicorn Bakes, Fairmont and Zee Real Estate, with role and team work kept separate.'
 
 body = ''.join(f'<div data-page="{p}" data-title="{TITLES.get(p, "Abhishek Prakash")}">{fill(grab("PAGE", p))}</div>' for p in pages)
 import base64 as _b64
@@ -320,9 +448,34 @@ for _p in POSTS:
         "mainEntityOfPage": _u, "url": _u, "image": "https://abhishekreally.com/img/og-image.jpg", "articleSection": _p['category'], "inLanguage": "en"},
       {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://abhishekreally.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://abhishekreally.com/blog"}, {"@type": "ListItem", "position": 3, "name": _p['title'], "item": _u}]},
       PERSON)
-FAVICON = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#121211">'
 SITE = 'https://abhishekreally.com'
-FILES = {'home': 'index', 'kannur': 'digital-marketing-kannur', 'kozhikode': 'digital-marketing-kozhikode', 'thanks': 'thanks', 'notfound': '404'}
+# ---- structured data for service pages, case studies, Kerala and freelance pages ----
+def _strip(x): return _html.unescape(re.sub('<[^>]+>', '', x)).strip()
+def _faqnode(items): return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": _strip(q), "acceptedAnswer": {"@type": "Answer", "text": _strip(a)}} for q, a in items]}
+def _page_faq(pid): return re.findall(r'<summary><span class="q">Q\d+</span>(.*?)<span class="pm"></span></summary><div class="ans">(.*?)</div>', grab('PAGE', pid), re.S)
+AREAS = [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}, {"@type": "State", "name": "Kerala"}]
+for _s in SERVICE_PAGES:
+    _u = SITE + '/' + _s['slug']
+    LD[_s['id']] = _ld({"@type": "Service", "name": _s['name'], "serviceType": _s['name'], "url": _u, "description": _s['desc'],
+                        "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": AREAS},
+                       PERSON, _faqnode(_s['faq']), _crumbs(("Services", SITE + "/services"), (_s['crumb'], _u)))
+LD['case-studies'] = _ld({"@type": "CollectionPage", "url": SITE + "/case-studies", "name": "Case studies", "about": {"@id": "https://abhishekreally.com/#person"},
+    "hasPart": [{"@type": "Article", "headline": _strip(c['h1']), "url": SITE + '/' + c['slug']} for c in CASE_STUDIES]}, PERSON, _crumbs(("Case studies", SITE + "/case-studies")))
+for _c in CASE_STUDIES:
+    _u = SITE + '/' + _c['slug']
+    LD[_c['id']] = _ld({"@type": "Article", "headline": _strip(_c['h1']), "description": _c['desc'], "url": _u, "mainEntityOfPage": _u,
+                        "author": {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name": "Abhishek Prakash", "url": SITE + "/about"},
+                        "publisher": {"@id": "https://abhishekreally.com/#person"}, "datePublished": SITE_UPDATED, "dateModified": SITE_UPDATED,
+                        "image": SITE + "/img/og-image.jpg", "about": _c['name'], "inLanguage": "en"},
+                       PERSON, _crumbs(("Case studies", SITE + "/case-studies"), (_c['crumb'], _u)))
+LD['kerala'] = _ld({"@type": "Service", "name": "Digital marketing in Kerala", "serviceType": "Digital Marketing", "url": SITE + "/digital-marketing-expert-kerala",
+    "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "State", "name": "Kerala"}] + [{"@type": "City", "name": n} for n in ["Kannur", "Kozhikode", "Kochi", "Thrissur", "Malappuram", "Thiruvananthapuram"]],
+    "description": DESCS['kerala']}, PERSON, _faqnode(_page_faq('kerala')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala")))
+LD['freelance-dubai'] = _ld({"@type": "Service", "name": "Freelance digital marketing in Dubai", "serviceType": "Digital Marketing", "url": SITE + "/freelance-digital-marketer-dubai",
+    "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
+    "description": DESCS['freelance-dubai']}, PERSON, _faqnode(_page_faq('freelance-dubai')), _crumbs(("Freelance digital marketer in Dubai", SITE + "/freelance-digital-marketer-dubai")))
+FAVICON = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#121211">'
+FILES = {'thanks': 'thanks', 'notfound': '404'}
 POST_IDS = {x['id'] for x in POSTS}
 POST_CAT = {x['id']: x['category'] for x in POSTS}
 for p in pages + ['thanks', 'notfound']:
@@ -361,7 +514,7 @@ for p in pages + ['thanks', 'notfound']:
 {LD.get(p, "")}
 <link rel="stylesheet" href="/styles.css">
 </head>
-<body data-current="{p}">
+<body data-current="{NAV_KEY.get(p, p)}">
 {links(fill(header), 'mpa')}
 <main class="wrap"><div class="frame">
 {links(fill(grab("PAGE", p)), 'mpa').replace('<form class="form" id="contact-form" novalidate>', FORM_NETLIFY)}
@@ -370,6 +523,7 @@ for p in pages + ['thanks', 'notfound']:
 </body>
 </html>
 '''
+    os.makedirs(os.path.dirname(os.path.join(H, fname + '.html')), exist_ok=True)
     open(os.path.join(H, fname + '.html'), 'w', encoding='utf-8').write(html)
 for f in ['favicon-32.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']:
     shutil.copy(os.path.join(SRC, 'brand', f), os.path.join(H, f))
@@ -390,6 +544,22 @@ open(os.path.join(H, 'netlify.toml'), 'w', encoding='utf-8').write('''[build]
 [[redirects]]
   from = "/services/"
   to = "/services.html"
+  status = 301
+# /services and /case-studies are pages AND folders (services.html + services/meta-ads.html).
+# Force the bare paths to the hub pages so Netlify never looks for a folder index.
+[[redirects]]
+  from = "/services"
+  to = "/services.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/case-studies"
+  to = "/case-studies.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/work"
+  to = "/case-studies"
   status = 301
 [[redirects]]
   from = "/work.html"
