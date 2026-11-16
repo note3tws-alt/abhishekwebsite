@@ -927,3 +927,7 @@ body{color:#16161a}
 /* new AP logo (supplied) */
 .logo-mark{border-radius:9px}
 .foot .logo-mark{box-shadow:0 0 0 1px var(--night-line)}
+
+/* In-article links (Related reading etc.): visible as links, lime underline to match the accent */
+.article a:not(.btn){color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:3px;text-underline-offset:3px;font-weight:600}
+.article a:not(.btn):hover{text-decoration-color:var(--ink)}

@@ -18,7 +18,7 @@ It produces:
 | `out/abhishek-really-netlify.zip` | The same folder zipped with files at the top level, for Netlify drag-and-drop deploys. |
 | `out/abhishek-really.html` | A single-file preview of the whole site with hash routing (`#about`, `#kannur`, …), images inlined. Was used for the claude.ai artifact preview. Not deployed. |
 
-Preview locally: `cd out/abhishek-really-site && python3 -m http.server 8000`.
+Preview locally: `python3 tools/serve.py` → http://localhost:8000. (Internal links are clean root-relative URLs like `/about`, so a plain `python3 -m http.server` won't resolve them; `tools/serve.py` maps `/about` → `about.html` like Netlify does.)
 
 ### Source files
 
@@ -34,10 +34,12 @@ Preview locally: `cd out/abhishek-really-site && python3 -m http.server 8000`.
 | `src/photos/` | `abhishek-suit.jpg` (home hero), `abhishek-headshot.webp` (cut-out, About/Contact/chat), `tws-avatar.jpg` (@TheWorldStories avatar). |
 | `build.py` | Templating, per-page SEO titles/descriptions (`TITLES`, `DESCS`), JSON-LD structured data (`LD`), sitemap, robots, netlify.toml, 404/thanks pages, zip. |
 | `tools/make_icons.js` | Regenerates favicon PNGs from `src/brand/mark*.svg` (needs Playwright). |
+| `tools/make_og.js` | Regenerates the 1200×630 social share card `src/brand/og-image.jpg` (needs Playwright). |
+| `tools/serve.py` | Local preview server with Netlify-style clean URLs. |
 
 ### Template tokens used in pages.html / posts.py
 
-- `href="@about"` → link to a page id. Becomes `about.html` on the real site and `#about` in the preview. File names come from `FILE_NAMES` in build.py (e.g. `kannur` → `digital-marketing-kannur.html`).
+- `href="@about"` → link to a page id (hyphens allowed, e.g. `@google-first-page`). Becomes the clean URL `/about` on the real site (matching the canonical and sitemap) and `#about` in the preview. File names come from `FILE_NAMES` in build.py (e.g. `kannur` → `/digital-marketing-kannur`). The build stops with an error on an unknown `@id`.
 - `{{i:name}}` → inline SVG icon from the `P` dict in build.py.
 - `{{logo:slug}}` → client logo from `src/logos/slug.png`.
 - `{{photo:name}}` → photo from `src/photos/`.
@@ -95,7 +97,12 @@ Keep all copy consistent with these. Do not invent clients, numbers, testimonial
 ## SEO setup
 
 - Per-page `<title>` and meta descriptions live in `TITLES` / `DESCS` in build.py (kept under ~60 / ~160 characters).
-- Each page has JSON-LD: Person, WebSite, FAQPage, Service list, ProfilePage, BreadcrumbList, BlogPosting.
+- Each page has JSON-LD: WebSite on every page, plus Person, FAQPage (only where the FAQ is visible), Service list, ProfilePage, ContactPage, CollectionPage, BreadcrumbList, BlogPosting.
+- `SITE_UPDATED` in build.py drives sitemap `<lastmod>` and articles' `dateModified`. Bump it when content changes.
+- Open Graph / Twitter cards use `img/og-image.jpg` (1200×630, from `tools/make_og.js`). Articles get `og:type=article` with published/modified times.
+- All `<img>` tags get width/height from the real file (prevents layout shift); the home hero is preloaded with `fetchpriority=high`; client logos are lazy-loaded and were palette-compressed (~75% smaller, visually identical).
+- Each article ends with "Related reading" links (`RELATED` in build.py) and "More articles" rotates, so every post and both location pages get internal links.
+- SEO audit done 16 Nov 2026 (internal links had been broken for hyphenated page ids such as `@google-first-page`; fixed).
 - **Location pages:** `/digital-marketing-kannur` (target "digital marketing Kannur" / "Digital Marketing Strategist in Kannur") and `/digital-marketing-kozhikode` (targets both "Kozhikode" and "Calicut"). Competitors studied: raniyaa.in (Kannur) and dmirsha.com (Calicut/Kerala). The service areas on the Kannur page include Thalassery and Taliparamba — Abhishek hasn't confirmed these.
 - **Blog (`/blog`):** six posts in posts.py — Kochi, Malappuram (Gulf audiences), Thrissur (festival seasons), first page of Google, Meta Ads for Dubai real estate, Google Business Profile for Kerala.
 - **Google Search Console:** domain property verified by DNS TXT record (keep that record if DNS moves); `https://abhishekreally.com/sitemap.xml` submitted. After big content changes, request indexing for the changed URLs.

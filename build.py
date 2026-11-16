@@ -25,8 +25,24 @@ _gen = f"""
 <section class="block" style="border-top:0"><div class="post-grid">{_blog_cards}</div></section>
 <!--/PAGE-->
 """
+# Contextual internal links at the end of each article (helps the location and service pages rank)
+RELATED = {
+  'kochi': ['kannur', 'kozhikode', 'google-business-profile'],
+  'malappuram': ['kozhikode', 'kannur', 'services'],
+  'thrissur': ['kannur', 'kozhikode', 'services'],
+  'google-first-page': ['google-business-profile', 'kannur', 'services'],
+  'meta-ads-dubai-real-estate': ['services', 'clients', 'about'],
+  'google-business-profile': ['kannur', 'kozhikode', 'google-first-page'],
+}
+REL_LABEL = {'kannur': 'Digital marketing strategist in Kannur', 'kozhikode': 'Digital marketing strategist in Kozhikode (Calicut)',
+             'services': 'Digital marketing services in Dubai: Meta Ads, content and lead generation', 'clients': 'Brands I’ve helped grow in the UAE and India',
+             'about': 'About Abhishek Prakash', **{p['id']: p['title'] for p in POSTS}}
+def _related(pid):
+    ids = RELATED.get(pid, [])
+    if not ids: return ''
+    return '<h2>Related reading</h2><ul>' + ''.join(f'<li><a href="@{i}">{REL_LABEL[i]}</a></li>' for i in ids) + '</ul>'
 for _p in POSTS:
-    _others = [o for o in POSTS if o['id'] != _p['id']][:3]
+    _i = POSTS.index(_p); _others = [POSTS[(_i + k) % len(POSTS)] for k in (1, 2, 3)]  # rotate so every article gets inbound links
     _gen += f"""
 <!--PAGE:{_p['id']}-->
 <section class="block page-hero">
@@ -41,7 +57,7 @@ for _p in POSTS:
   </div>
 </section>
 <section class="block" style="border-top:0">
-  <article class="article">{_p['body']}
+  <article class="article">{_p['body']}{_related(_p['id'])}
     <div class="post-cta"><div><b>Want help with your marketing?</b><span>I reply within 24 hours, 7 days a week.</span></div><a class="btn btn-hot" href="@contact">Contact Me {{{{i:arrow}}}}</a></div>
   </article>
 </section>
@@ -109,17 +125,41 @@ def fill(s):
             s = s.replace('{{%s}}' % k, v)
     return icons(s)
 
-import base64
+import base64, struct
+def imgsize(path):
+    """(width, height) of a PNG, JPEG or WebP file, standard library only. Used for width/height attributes (prevents layout shift)."""
+    d = open(path, 'rb').read()
+    if d[:8] == b'\x89PNG\r\n\x1a\n':
+        return struct.unpack('>II', d[16:24])
+    if d[:4] == b'RIFF' and d[8:12] == b'WEBP':
+        k = d[12:16]
+        if k == b'VP8X':
+            return 1 + int.from_bytes(d[24:27], 'little'), 1 + int.from_bytes(d[27:30], 'little')
+        if k == b'VP8L':
+            b = int.from_bytes(d[21:25], 'little'); return (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+        return struct.unpack('<HH', d[26:30])[0] & 0x3FFF, struct.unpack('<HH', d[26:30])[1] & 0x3FFF
+    i = 2
+    while i < len(d):
+        if d[i] != 0xFF: i += 1; continue
+        mk = d[i + 1]; ln = struct.unpack('>H', d[i + 2:i + 4])[0]
+        if mk in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+            h, w = struct.unpack('>HH', d[i + 5:i + 9]); return w, h
+        i += 2 + ln
+    raise ValueError(path)
+
 LOGO_DIR = os.path.join(SRC, 'logos')
+LOGO_NAMES = {'saj-realty': 'SAJ Realty', 'wrapshap': 'WrapShap', 'ruyah-by-naas': 'Ruyah by Naas', 'k1-kitchen-gallery': 'K1 Kitchen Gallery',
+              'land4sale-payyanur': 'Land4Sale Payyanur', 'modus-d3': 'Modus D3', 'the-district': 'The District', 'auto-jota': 'Auto Jota',
+              'brandvo-digital': 'Brandvo Digital', 'zee-real-estate': 'Zee Real Estate', 'unicorn-bakes': 'Unicorn Bakes', 'ethra': 'Ethra'}
 def logos(s, mode):
     def rep(m):
-        slug = m.group(1); alt = slug.replace('-', ' ').title() + ' logo'
+        slug = m.group(1); alt = LOGO_NAMES.get(slug, slug.replace('-', ' ').title()) + ' logo'
+        f = os.path.join(LOGO_DIR, slug + '.png'); w, h = imgsize(f)
         if mode == 'spa':
-            b = base64.b64encode(open(os.path.join(LOGO_DIR, slug + '.png'), 'rb').read()).decode()
-            src = 'data:image/png;base64,' + b
+            src = 'data:image/png;base64,' + base64.b64encode(open(f, 'rb').read()).decode()
         else:
-            src = 'img/logos/%s.png' % slug
-        return ('<img src="%s" alt="%s">' if mode == 'spa' else '<img src="%s" alt="%s" loading="lazy">') % (src, alt)
+            src = '/img/logos/%s.png' % slug
+        return '<img src="%s" alt="%s" width="%d" height="%d" loading="lazy" decoding="async">' % (src, alt, w, h)
     return re.sub(r'\{\{logo:([\w-]+)\}\}', rep, s)
 
 PHOTO_DIR = os.path.join(SRC, 'photos')
@@ -132,33 +172,42 @@ def photos(s, mode):
         if mode == 'spa':
             src = 'data:%s;base64,%s' % (MIME[ext], base64.b64encode(open(os.path.join(PHOTO_DIR, f), 'rb').read()).decode())
         else:
-            src = 'img/' + f
+            src = '/img/' + f
         alt = '@TheWorldStories profile picture' if name.startswith('tws') else 'Abhishek Prakash, digital marketing specialist in Dubai'
-        return '<img src="%s" alt="%s">' % (src, alt)
+        w, h = imgsize(os.path.join(PHOTO_DIR, f))
+        extra = ' fetchpriority="high"' if name == 'abhishek-suit' else ' decoding="async"'
+        return '<img src="%s" alt="%s" width="%d" height="%d"%s>' % (src, alt, w, h, extra)
     return re.sub(r'\{\{photo:([\w-]+)\}\}', rep, s)
+
+def url_for(p):
+    """Clean, root-relative URL for a page id. Matches the canonical URLs and the sitemap (Netlify serves about.html at /about)."""
+    f = FILE_NAMES.get(p, p)
+    return '/' if f == 'index' else '/' + f
 
 def links(s, mode):
     s = photos(logos(s, mode), mode)
-    s = s.replace('{{waicon}}', '<img class="wa-ico" src="%s" alt="" width="18" height="18">' % (WA_SPA if mode == 'spa' else 'img/brand/wa-glyph-white.svg'))
+    s = s.replace('{{waicon}}', '<img class="wa-ico" src="%s" alt="" width="18" height="18">' % (WA_SPA if mode == 'spa' else '/img/brand/wa-glyph-white.svg'))
     def rep(m):
         p = m.group(1)
+        if p not in FILE_NAMES and p not in pages:
+            raise SystemExit('Unknown page link @%s' % p)
         if mode == 'spa':
             return f'href="#{p}"'
-        return 'href="%s"' % (FILE_NAMES.get(p, p) + '.html')
-    return re.sub(r'href="@(\w+)"', rep, s)
+        return 'href="%s"' % url_for(p)
+    return re.sub(r'href="@([\w-]+)"', rep, s)
 
 FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
-DESC = 'Abhishek Prakash, Dubai-based Digital Marketing Specialist with 7+ years across India and the UAE: Meta Ads, performance marketing, content strategy and lead generation.'
+DESC = 'Abhishek Prakash, Dubai-based digital marketing specialist with 7+ years across India and the UAE: Meta Ads, performance marketing and content.'
 os.makedirs(OUT, exist_ok=True)
 
 # ---- artifact: one file, hash-routed pages ----
 TITLES = {'thanks': 'Thank you | Abhishek Prakash', 'notfound': 'Page not found | Abhishek Prakash',
-  'home': 'Abhishek Prakash | Digital Marketing Specialist in Dubai, UAE',
-  'about': 'About Abhishek Prakash | Digital Marketing Strategist in Dubai',
+  'home': 'Abhishek Prakash | Digital Marketing Specialist in Dubai',
+  'about': 'About Abhishek Prakash, Digital Marketing Strategist, Dubai',
   'services': 'Meta Ads & Digital Marketing Services in Dubai | Abhishek',
-  'clients': 'Clients | Digital Marketing Expert in Dubai',
+  'clients': 'Clients & Brands | Abhishek Prakash, Digital Marketer Dubai',
   'kannur': 'Digital Marketing Strategist in Kannur | Abhishek Prakash',
-  'kozhikode': 'Digital Marketing Strategist in Kozhikode, Calicut | Abhishek',
+  'kozhikode': 'Digital Marketing Strategist in Kozhikode & Calicut',
   'blog': 'Digital Marketing Blog | Abhishek Prakash',
   'contact': 'Hire a Digital Marketing Expert in Dubai | Abhishek Prakash'}
 DESCS = {
@@ -213,21 +262,34 @@ _faq = re.findall(r'<summary><span class="q">Q\d+</span>(.*?)<span class="pm"></
 _faq = [(_html.unescape(re.sub('<[^>]+>', '', q)).strip(), _html.unescape(re.sub('<[^>]+>', '', a)).strip()) for q, a in _faq]
 PERSON = {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name": "Abhishek Prakash",
   "jobTitle": "Digital Marketing Specialist", "description": "Dubai-based digital marketing specialist, performance marketer and content strategist with 7+ years of experience across India and the UAE.",
-  "url": "https://abhishekreally.com/", "image": "https://abhishekreally.com/img/abhishek-suit.jpg", "email": "mailto:abhisheksayyy@gmail.com", "telephone": "+971588615423",
+  "url": "https://abhishekreally.com/", "image": {"@type": "ImageObject", "url": "https://abhishekreally.com/img/abhishek-suit.jpg", "width": 1000, "height": 900},
+  "alumniOf": {"@type": "EducationalOrganization", "name": "Digital Academy 360"}, "nationality": {"@type": "Country", "name": "India"}, "email": "mailto:abhisheksayyy@gmail.com", "telephone": "+971588615423",
   "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"},
   "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/"],
   "knowsAbout": ["Digital Marketing", "Performance Marketing", "Meta Ads", "Facebook Ads", "Instagram Ads", "Social Media Marketing", "Content Strategy", "Lead Generation", "Influencer Marketing", "Brand Positioning", "Video Content Direction", "Google Ads", "SEO", "Real Estate Marketing"]}
+SITE_UPDATED = '2026-11-16'   # bump when page content changes (sitemap lastmod, article dateModified)
+WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
+  "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
 def _ld(*nodes):
-    return '<script type="application/ld+json">' + _json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False) + '</script>'
+    nodes = [n for n in nodes if n]
+    if not any(n.get("@type") == "WebSite" for n in nodes):
+        nodes.append(WEBSITE)
+    return '<script type="application/ld+json">' + _json.dumps({"@context": "https://schema.org", "@graph": nodes}, ensure_ascii=False) + '</script>'
+def _crumbs(*items):
+    trail = [("Home", "https://abhishekreally.com/")] + list(items)
+    return {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(trail)]}
 FAQNODE = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]}
 SERVICES = ["Meta Ads & Performance Marketing", "Content Strategy & Video Production", "Social Media & Influencer Marketing", "Lead Generation & Brand Growth", "Google Ads, SEO & WordPress"]
 SERVNODE = {"@type": "ItemList", "name": "Digital marketing services in Dubai", "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": {"@type": "Service", "name": n, "serviceType": n, "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}, {"@type": "Country", "name": "India"}]}} for i, n in enumerate(SERVICES)]}
 LD = {
-  'home': _ld({"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash", "inLanguage": "en"}, PERSON, FAQNODE),
-  'about': _ld({"@type": "ProfilePage", "url": "https://abhishekreally.com/about", "mainEntity": {"@id": "https://abhishekreally.com/#person"}}, PERSON),
-  'services': _ld(PERSON, SERVNODE, FAQNODE),
-  'contact': _ld({"@type": "ContactPage", "url": "https://abhishekreally.com/contact"}, PERSON, FAQNODE),
-  'clients': _ld(PERSON),
+  'home': _ld(WEBSITE, PERSON, FAQNODE),
+  'about': _ld({"@type": "ProfilePage", "url": "https://abhishekreally.com/about", "name": "About Abhishek Prakash", "mainEntity": {"@id": "https://abhishekreally.com/#person"}, "dateModified": SITE_UPDATED},
+               PERSON, _crumbs(("About", "https://abhishekreally.com/about"))),
+  'services': _ld(PERSON, SERVNODE, FAQNODE, _crumbs(("Services", "https://abhishekreally.com/services"))),
+  'contact': _ld({"@type": "ContactPage", "url": "https://abhishekreally.com/contact", "name": "Contact Abhishek Prakash", "about": {"@id": "https://abhishekreally.com/#person"}},
+                 PERSON, FAQNODE, _crumbs(("Contact", "https://abhishekreally.com/contact"))),
+  'clients': _ld({"@type": "CollectionPage", "url": "https://abhishekreally.com/clients", "name": "Clients and brands", "about": {"@id": "https://abhishekreally.com/#person"}},
+                 PERSON, _crumbs(("Clients", "https://abhishekreally.com/clients"))),
   'kannur': None,
 }
 
@@ -249,21 +311,40 @@ LD['kozhikode'] = _ld(
   PERSON,
   {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _zfaq]})
 LD['blog'] = _ld({"@type": "Blog", "name": "Abhishek Prakash – Digital Marketing Blog", "url": "https://abhishekreally.com/blog", "author": {"@id": "https://abhishekreally.com/#person"},
-  "blogPost": [{"@type": "BlogPosting", "headline": p['title'], "url": "https://abhishekreally.com/" + p['slug']} for p in POSTS]}, PERSON)
+  "blogPost": [{"@type": "BlogPosting", "headline": p['title'], "url": "https://abhishekreally.com/" + p['slug']} for p in POSTS]}, PERSON,
+  _crumbs(("Blog", "https://abhishekreally.com/blog")))
 for _p in POSTS:
     _u = "https://abhishekreally.com/" + _p['slug']
-    LD[_p['id']] = _ld({"@type": "BlogPosting", "headline": _p['title'], "description": _p['desc'], "datePublished": DATE, "dateModified": DATE,
-        "author": {"@id": "https://abhishekreally.com/#person"}, "publisher": {"@id": "https://abhishekreally.com/#person"},
-        "mainEntityOfPage": _u, "url": _u, "image": "https://abhishekreally.com/img/abhishek-suit.jpg", "articleSection": _p['category'], "inLanguage": "en"},
+    LD[_p['id']] = _ld({"@type": "BlogPosting", "headline": _p['title'], "description": _p['desc'], "datePublished": DATE, "dateModified": SITE_UPDATED,
+        "author": {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name": "Abhishek Prakash", "url": "https://abhishekreally.com/about"}, "publisher": {"@id": "https://abhishekreally.com/#person"},
+        "mainEntityOfPage": _u, "url": _u, "image": "https://abhishekreally.com/img/og-image.jpg", "articleSection": _p['category'], "inLanguage": "en"},
       {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://abhishekreally.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://abhishekreally.com/blog"}, {"@type": "ListItem", "position": 3, "name": _p['title'], "item": _u}]},
       PERSON)
-FAVICON = '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest"><meta name="theme-color" content="#121211">'
+FAVICON = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#121211">'
 SITE = 'https://abhishekreally.com'
 FILES = {'home': 'index', 'kannur': 'digital-marketing-kannur', 'kozhikode': 'digital-marketing-kozhikode', 'thanks': 'thanks', 'notfound': '404'}
+POST_IDS = {x['id'] for x in POSTS}
+POST_CAT = {x['id']: x['category'] for x in POSTS}
 for p in pages + ['thanks', 'notfound']:
     fname = FILES.get(p, FILE_NAMES.get(p, p))
     canon = SITE + '/' + ('' if fname == 'index' else fname)
-    og = f'<link rel="canonical" href="{canon}"><meta property="og:type" content="website"><meta property="og:title" content="{TITLES[p]}"><meta property="og:description" content="{DESCS.get(p, DESC)}"><meta property="og:locale" content="en_AE"><meta property="og:site_name" content="Abhishek Prakash"><meta property="og:url" content="{canon}"><meta property="og:image" content="{SITE}/img/abhishek-suit.jpg"><meta name="twitter:card" content="summary_large_image">'
+    _t, _d = _html.escape(TITLES[p]), _html.escape(DESCS.get(p, DESC))
+    is_post = p in POST_IDS
+    og = (f'<link rel="canonical" href="{canon}"><meta name="robots" content="index, follow, max-image-preview:large">'
+          f'<meta property="og:type" content="{"article" if is_post else ("profile" if p == "about" else "website")}">'
+          f'<meta property="og:title" content="{_t}"><meta property="og:description" content="{_d}"><meta property="og:locale" content="en_AE">'
+          f'<meta property="og:site_name" content="Abhishek Prakash"><meta property="og:url" content="{canon}">'
+          f'<meta property="og:image" content="{SITE}/img/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
+          f'<meta property="og:image:alt" content="Abhishek Prakash, digital marketing specialist in Dubai">'
+          f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{_t}"><meta name="twitter:description" content="{_d}">'
+          f'<meta name="twitter:image" content="{SITE}/img/og-image.jpg"><meta name="author" content="Abhishek Prakash">')
+    if is_post:
+        og += (f'<meta property="article:published_time" content="{DATE}"><meta property="article:modified_time" content="{SITE_UPDATED}">'
+               f'<meta property="article:author" content="{SITE}/about"><meta property="article:section" content="{POST_CAT[p]}">')
+    if p == 'about':
+        og += '<meta property="profile:first_name" content="Abhishek"><meta property="profile:last_name" content="Prakash">'
+    if p == 'home':
+        og += '<link rel="preload" as="image" href="/img/abhishek-suit.jpg" fetchpriority="high">'
     if p in ('thanks', 'notfound'):
         og = '<meta name="robots" content="noindex">'
     html = f'''<!doctype html>
@@ -278,27 +359,24 @@ for p in pages + ['thanks', 'notfound']:
 {FAVICON}
 {og}
 {LD.get(p, "")}
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body data-current="{p}">
 {links(fill(header), 'mpa')}
 <main class="wrap"><div class="frame">
 {links(fill(grab("PAGE", p)), 'mpa').replace('<form class="form" id="contact-form" novalidate>', FORM_NETLIFY)}
 {links(fill(footer), 'mpa').replace('</div></div>', '</div></main>', 1)}
-<script src="main.js"></script>
+<script src="/main.js" defer></script>
 </body>
 </html>
 '''
-    if p in ('notfound',):
-        for _f in set(FILE_NAMES.values()) | set(pages):
-            html = html.replace(f'href="{_f}.html"', f'href="/{_f}.html"')
-        html = html.replace('href="/index.html"', 'href="/"').replace('href="styles.css"', 'href="/styles.css"').replace('src="main.js"', 'src="/main.js"').replace('href="favicon.svg"', 'href="/favicon.svg"').replace('src="img/', 'src="/img/').replace('href="favicon-32.png"', 'href="/favicon-32.png"').replace('href="apple-touch-icon.png"', 'href="/apple-touch-icon.png"').replace('href="site.webmanifest"', 'href="/site.webmanifest"')
     open(os.path.join(H, fname + '.html'), 'w', encoding='utf-8').write(html)
 for f in ['favicon-32.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']:
     shutil.copy(os.path.join(SRC, 'brand', f), os.path.join(H, f))
 os.makedirs(os.path.join(H, 'img', 'brand'), exist_ok=True)
 for f in ['mark.svg', 'mark-lime.svg', 'logo-mark-1024.png', 'wa-glyph-white.svg', 'wa-glyph-green.svg']:
     shutil.copy(os.path.join(SRC, 'brand', f), os.path.join(H, 'img', 'brand', f))
+shutil.copy(os.path.join(SRC, 'brand', 'og-image.jpg'), os.path.join(H, 'img', 'og-image.jpg'))
 open(os.path.join(H, 'site.webmanifest'), 'w', encoding='utf-8').write('{"name":"Abhishek Prakash","short_name":"Abhishek","icons":[{"src":"/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}],"theme_color":"#121211","background_color":"#ffffff","display":"standalone","start_url":"/"}')
 shutil.copy(os.path.join(SRC, 'brand', 'mark.svg'), os.path.join(H, 'favicon.svg'))
 open(os.path.join(H, 'netlify.toml'), 'w', encoding='utf-8').write('''[build]
@@ -334,7 +412,7 @@ open(os.path.join(H, 'netlify.toml'), 'w', encoding='utf-8').write('''[build]
     Referrer-Policy = "strict-origin-when-cross-origin"
 ''')
 open(os.path.join(H, 'robots.txt'), 'w', encoding='utf-8').write('User-agent: *\nAllow: /\nSitemap: https://abhishekreally.com/sitemap.xml\n')
-open(os.path.join(H, 'sitemap.xml'), 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{SITE}/{u}</loc><lastmod>2026-11-09</lastmod></url>' for u in ['', 'about', 'services', 'clients', 'contact', 'digital-marketing-kannur', 'digital-marketing-kozhikode', 'blog'] + [p['slug'] for p in POSTS]) + '</urlset>\n')
+open(os.path.join(H, 'sitemap.xml'), 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{SITE}{url_for(u)}</loc><lastmod>{SITE_UPDATED}</lastmod></url>' for u in pages) + '</urlset>\n')
 z = os.path.join(OUT, 'abhishek-really-netlify.zip')
 with zipfile.ZipFile(z, 'w', zipfile.ZIP_DEFLATED) as zf:
     for root, _, files in os.walk(H):

@@ -146,7 +146,7 @@ POSTS = [
  'id': 'google-business-profile', 'slug': 'google-business-profile-for-kerala-businesses', 'category': 'Local SEO',
  'title': 'Why Google Business Profile Matters for Local Businesses in Kerala',
  'h1': 'Why Google Business Profile matters <span class="ghost">for local businesses in Kerala.</span>',
- 'seo_title': 'Google Business Profile for Kerala Businesses: Why It Matters',
+ 'seo_title': 'Google Business Profile for Kerala Businesses: A Guide',
  'desc': 'Why a complete Google Business Profile helps Kerala businesses in Kannur, Kozhikode and beyond appear in map results, plus a step-by-step setup checklist.',
  'excerpt': 'For most local searches, the map results appear first. A complete Google Business Profile is how you get into them.',
  'read': '4 min read',
