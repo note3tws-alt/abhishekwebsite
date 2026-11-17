@@ -32,9 +32,9 @@ RELATED = {
   'thrissur': ['kannur', 'kozhikode', 'services'],
   'google-first-page': ['google-business-profile', 'kannur', 'services'],
   'meta-ads-dubai-real-estate': ['services', 'clients', 'about'],
-  'google-business-profile': ['kannur', 'kozhikode', 'google-first-page'],
+  'google-business-profile': ['payyanur', 'kannur', 'google-first-page'],
 }
-REL_LABEL = {'kannur': 'Digital marketing strategist in Kannur', 'kozhikode': 'Digital marketing strategist in Kozhikode (Calicut)',
+REL_LABEL = {'payyanur': 'Digital marketer in Payyanur', 'kannur': 'Digital marketing strategist in Kannur', 'kozhikode': 'Digital marketing strategist in Kozhikode (Calicut)',
              'services': 'Digital marketing services in Dubai: Meta Ads, content and lead generation', 'clients': 'Brands I’ve helped grow in the UAE and India',
              'about': 'About Abhishek Prakash', **{p['id']: p['title'] for p in POSTS}}
 def _related(pid):
@@ -234,8 +234,8 @@ header = re.search(r'<!--HEADER-->(.*?)<!--/HEADER-->', raw, re.S).group(1)
 footer = re.search(r'<!--FOOTER-->(.*?)<!--/FOOTER-->', raw, re.S).group(1)
 parts = {k: grab('PART', k) for k in re.findall(r'<!--PART:([\w-]+)-->', raw)}
 pages = (['home', 'about', 'services'] + [s['id'] for s in SERVICE_PAGES] + ['case-studies'] + [c['id'] for c in CASE_STUDIES] +
-         ['clients', 'contact', 'kerala', 'kannur', 'kozhikode', 'freelance-dubai', 'blog'] + [p['id'] for p in POSTS])
-FILE_NAMES = {'home': 'index', 'kerala': 'digital-marketing-expert-kerala', 'kannur': 'digital-marketing-kannur', 'kozhikode': 'digital-marketing-kozhikode',
+         ['clients', 'contact', 'kerala', 'kannur', 'payyanur', 'kozhikode', 'freelance-dubai', 'blog'] + [p['id'] for p in POSTS])
+FILE_NAMES = {'home': 'index', 'kerala': 'digital-marketing-expert-kerala', 'kannur': 'digital-marketing-kannur', 'payyanur': 'digital-marketing-payyanur', 'kozhikode': 'digital-marketing-kozhikode',
               'freelance-dubai': 'freelance-digital-marketer-dubai', 'blog': 'blog', **{p['id']: p['slug'] for p in POSTS},
               **{s['id']: s['slug'] for s in SERVICE_PAGES}, **{c['id']: c['slug'] for c in CASE_STUDIES}}
 # Main-menu item highlighted on each page (sub-pages light up their section)
@@ -349,6 +349,8 @@ TITLES['kerala'] = 'Digital Marketing Expert in Kerala | Abhishek Prakash'
 DESCS['kerala'] = 'Digital marketing anywhere in Kerala: Meta Ads, social media, content and lead generation, from a strategist with Kannur roots and Dubai experience.'
 TITLES['freelance-dubai'] = 'Freelance Digital Marketer in Dubai | Abhishek Prakash'
 DESCS['freelance-dubai'] = 'Freelance digital marketer in Dubai for Meta Ads, lead generation, social media and content: by project, monthly or as a consultant. 7+ years in UAE & India.'
+TITLES['payyanur'] = 'Digital Marketer in Payyanur, Kannur | Abhishek Prakash'
+DESCS['payyanur'] = 'Digital marketer for Payyanur businesses: Meta Ads, Instagram, content and lead generation. Worked with Unicorn Bakes, Brandvo Digital and Land4Sale Payyanur.'
 TITLES['case-studies'] = 'Digital Marketing Case Studies | Abhishek Prakash'
 DESCS['case-studies'] = 'Case studies from Abhishek Prakash: @TheWorldStories (3.2M followers), Unicorn Bakes, Fairmont and Zee Real Estate, with role and team work kept separate.'
 
@@ -395,7 +397,7 @@ PERSON = {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name"
   "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"},
   "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/"],
   "knowsAbout": ["Digital Marketing", "Performance Marketing", "Meta Ads", "Facebook Ads", "Instagram Ads", "Social Media Marketing", "Content Strategy", "Lead Generation", "Influencer Marketing", "Brand Positioning", "Video Content Direction", "Google Ads", "SEO", "Real Estate Marketing"]}
-SITE_UPDATED = '2026-11-16'   # bump when page content changes (sitemap lastmod, article dateModified)
+SITE_UPDATED = '2026-11-17'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
   "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
 def _ld(*nodes):
@@ -471,6 +473,9 @@ for _c in CASE_STUDIES:
 LD['kerala'] = _ld({"@type": "Service", "name": "Digital marketing in Kerala", "serviceType": "Digital Marketing", "url": SITE + "/digital-marketing-expert-kerala",
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "State", "name": "Kerala"}] + [{"@type": "City", "name": n} for n in ["Kannur", "Kozhikode", "Kochi", "Thrissur", "Malappuram", "Thiruvananthapuram"]],
     "description": DESCS['kerala']}, PERSON, _faqnode(_page_faq('kerala')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala")))
+LD['payyanur'] = _ld({"@type": "Service", "name": "Digital marketing in Payyanur", "serviceType": "Digital Marketing", "url": SITE + "/digital-marketing-payyanur",
+    "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": n} for n in ["Payyanur", "Kannur", "Taliparamba", "Cheruvathur"]] + [{"@type": "State", "name": "Kerala"}],
+    "description": DESCS['payyanur']}, PERSON, _faqnode(_page_faq('payyanur')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala"), ("Payyanur", SITE + "/digital-marketing-payyanur")))
 LD['freelance-dubai'] = _ld({"@type": "Service", "name": "Freelance digital marketing in Dubai", "serviceType": "Digital Marketing", "url": SITE + "/freelance-digital-marketer-dubai",
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
     "description": DESCS['freelance-dubai']}, PERSON, _faqnode(_page_faq('freelance-dubai')), _crumbs(("Freelance digital marketer in Dubai", SITE + "/freelance-digital-marketer-dubai")))
