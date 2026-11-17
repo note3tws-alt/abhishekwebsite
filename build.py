@@ -397,6 +397,22 @@ PERSON = {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name"
   "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"},
   "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/", "https://g.page/r/Ccn8e79FhoryEBM"],
   "knowsAbout": ["Digital Marketing", "Performance Marketing", "Meta Ads", "Facebook Ads", "Instagram Ads", "Social Media Marketing", "Content Strategy", "Lead Generation", "Influencer Marketing", "Brand Positioning", "Video Content Direction", "Google Ads", "SEO", "Real Estate Marketing"]}
+LLMS_INTRO = """# Abhishek Prakash
+
+> Abhishek Prakash is a digital marketing specialist, performance marketer and content strategist with 7+ years of experience across India and the UAE. He is based in Dubai and works with businesses in Dubai, the UAE and across Kerala, India (including Payyanur, Kannur and Kozhikode). Website: https://abhishekreally.com
+
+## Key facts
+
+- Services: Meta Ads (Facebook and Instagram ads), performance marketing, Google Ads, SEO, social media marketing, content strategy and video scripts, lead generation, Google Business Profile and local SEO, marketing consulting.
+- Results: an average 10-15X ROAS on Meta Ads across the brands he manages. 12+ brands grown across the UAE and India.
+- Built @TheWorldStories, a travel page on Twitter he created in 2011 that grew to 3.2M+ followers and was the most-followed travel page on Twitter in 2016 (archived: https://web.archive.org/web/20170726141138/twitter.com/theworldstories).
+- Experience: Unicorn Bakes, Payyanur (2020-2024, digital marketing and social media growth); Fairmont Project Management Services, Dubai (2025-2026, lead generation and performance advertising); Head of Marketing at Zee Real Estate and Modus D3, Dubai (Aug-Oct 2026).
+- Clients include Zee Real Estate, Modus D3, Brandvo Digital, Ethra, SAJ Realty, Ruyah by Naas, Unicorn Bakes, K1 Kitchen Gallery, WrapShap, Auto Jota, The District and Land4Sale Payyanur.
+- Education: Post Graduate Program in Digital Marketing, Digital Academy 360 (2023); Bachelor of Business Management (BBM), 2014-2017.
+- Google Business Profile: Abhishek Prakash | Digital Marketer in Payyanur (Edat, Payyanur, Kerala 670327): https://g.page/r/Ccn8e79FhoryEBM
+- Contact: abhisheksayyy@gmail.com, +971 58 861 5423 (phone and WhatsApp), https://abhishekreally.com/contact
+- Profiles: https://www.linkedin.com/in/prakashabhishek, https://www.instagram.com/abhishekdigitaluae/
+"""
 SITE_UPDATED = '2026-11-17'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
   "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
@@ -411,8 +427,16 @@ def _crumbs(*items):
 FAQNODE = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]}
 SERVICES = ["Meta Ads & Performance Marketing", "Content Strategy & Video Production", "Social Media & Influencer Marketing", "Lead Generation & Brand Growth", "Google Ads, SEO & WordPress"]
 SERVNODE = {"@type": "ItemList", "name": "Digital marketing services in Dubai", "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": {"@type": "Service", "name": n, "serviceType": n, "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}, {"@type": "Country", "name": "India"}]}} for i, n in enumerate(SERVICES)]}
+BUSINESS = {"@type": "ProfessionalService", "@id": "https://abhishekreally.com/#business", "name": "Abhishek Prakash | Digital Marketer in Payyanur",
+  "description": "Freelance digital marketing: Meta Ads, Google Ads, SEO, social media, content strategy and lead generation for businesses in Kerala and Dubai.",
+  "url": "https://abhishekreally.com/digital-marketing-payyanur", "telephone": "+971588615423", "email": "abhisheksayyy@gmail.com",
+  "image": "https://abhishekreally.com/img/brand/logo-mark-1024.png", "logo": "https://abhishekreally.com/img/brand/logo-mark-1024.png",
+  "address": {"@type": "PostalAddress", "streetAddress": "Edat", "addressLocality": "Payyanur", "addressRegion": "Kerala", "postalCode": "670327", "addressCountry": "IN"},
+  "hasMap": "https://g.page/r/Ccn8e79FhoryEBM", "sameAs": ["https://g.page/r/Ccn8e79FhoryEBM"], "founder": {"@id": "https://abhishekreally.com/#person"},
+  "areaServed": [{"@type": "City", "name": n} for n in ["Payyanur", "Kannur", "Kozhikode", "Kasaragod"]] + [{"@type": "State", "name": "Kerala"}, {"@type": "City", "name": "Dubai"}],
+  "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "19:00"}]}
 LD = {
-  'home': _ld(WEBSITE, PERSON, FAQNODE),
+  'home': _ld(WEBSITE, PERSON, BUSINESS, FAQNODE),
   'about': _ld({"@type": "ProfilePage", "url": "https://abhishekreally.com/about", "name": "About Abhishek Prakash", "mainEntity": {"@id": "https://abhishekreally.com/#person"}, "dateModified": SITE_UPDATED},
                PERSON, _crumbs(("About", "https://abhishekreally.com/about"))),
   'services': _ld(PERSON, SERVNODE, FAQNODE, _crumbs(("Services", "https://abhishekreally.com/services"))),
@@ -475,7 +499,7 @@ LD['kerala'] = _ld({"@type": "Service", "name": "Digital marketing in Kerala", "
     "description": DESCS['kerala']}, PERSON, _faqnode(_page_faq('kerala')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala")))
 LD['payyanur'] = _ld({"@type": "Service", "name": "Digital marketing in Payyanur", "serviceType": "Digital Marketing", "url": SITE + "/digital-marketing-payyanur",
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": n} for n in ["Payyanur", "Kannur", "Taliparamba", "Cheruvathur"]] + [{"@type": "State", "name": "Kerala"}],
-    "description": DESCS['payyanur']}, PERSON, _faqnode(_page_faq('payyanur')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala"), ("Payyanur", SITE + "/digital-marketing-payyanur")))
+    "description": DESCS['payyanur']}, PERSON, BUSINESS, _faqnode(_page_faq('payyanur')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala"), ("Payyanur", SITE + "/digital-marketing-payyanur")))
 LD['freelance-dubai'] = _ld({"@type": "Service", "name": "Freelance digital marketing in Dubai", "serviceType": "Digital Marketing", "url": SITE + "/freelance-digital-marketer-dubai",
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
     "description": DESCS['freelance-dubai']}, PERSON, _faqnode(_page_faq('freelance-dubai')), _crumbs(("Freelance digital marketer in Dubai", SITE + "/freelance-digital-marketer-dubai")))
@@ -586,7 +610,14 @@ open(os.path.join(H, 'netlify.toml'), 'w', encoding='utf-8').write('''[build]
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
 ''')
-open(os.path.join(H, 'robots.txt'), 'w', encoding='utf-8').write('User-agent: *\nAllow: /\nSitemap: https://abhishekreally.com/sitemap.xml\n')
+AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User',
+           'Google-Extended', 'Applebot', 'Applebot-Extended', 'Bingbot', 'Amazonbot', 'meta-externalagent', 'DuckAssistBot', 'MistralAI-User', 'CCBot']
+open(os.path.join(H, 'robots.txt'), 'w', encoding='utf-8').write(
+    '# Search engines and AI assistants are welcome to crawl and cite this site.\nUser-agent: *\nAllow: /\n\n'
+    + ''.join(f'User-agent: {b}\n' for b in AI_BOTS) + 'Allow: /\n\nSitemap: https://abhishekreally.com/sitemap.xml\n')
+# llms.txt: plain-language summary for AI assistants (llmstxt.org format)
+_llms_pages = '\n'.join(f'- [{_html.unescape(TITLES.get(u, u)).split(" | ")[0]}]({SITE}{url_for(u)}): {_html.unescape(DESCS.get(u, ""))}' for u in pages if u in DESCS)
+open(os.path.join(H, 'llms.txt'), 'w', encoding='utf-8').write(LLMS_INTRO + '\n## Pages\n\n' + _llms_pages + '\n')
 open(os.path.join(H, 'sitemap.xml'), 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{SITE}{url_for(u)}</loc><lastmod>{SITE_UPDATED}</lastmod></url>' for u in pages) + '</urlset>\n')
 z = os.path.join(OUT, 'abhishek-really-netlify.zip')
 with zipfile.ZipFile(z, 'w', zipfile.ZIP_DEFLATED) as zf:
