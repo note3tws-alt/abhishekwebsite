@@ -395,7 +395,7 @@ PERSON = {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name"
   "url": "https://abhishekreally.com/", "image": {"@type": "ImageObject", "url": "https://abhishekreally.com/img/abhishek-suit.jpg", "width": 1000, "height": 900},
   "alumniOf": {"@type": "EducationalOrganization", "name": "Digital Academy 360"}, "nationality": {"@type": "Country", "name": "India"}, "email": "mailto:abhisheksayyy@gmail.com", "telephone": "+971588615423",
   "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"},
-  "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/"],
+  "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/", "https://g.page/r/Ccn8e79FhoryEBM"],
   "knowsAbout": ["Digital Marketing", "Performance Marketing", "Meta Ads", "Facebook Ads", "Instagram Ads", "Social Media Marketing", "Content Strategy", "Lead Generation", "Influencer Marketing", "Brand Positioning", "Video Content Direction", "Google Ads", "SEO", "Real Estate Marketing"]}
 SITE_UPDATED = '2026-11-17'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
