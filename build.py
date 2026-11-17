@@ -479,7 +479,7 @@ LD['payyanur'] = _ld({"@type": "Service", "name": "Digital marketing in Payyanur
 LD['freelance-dubai'] = _ld({"@type": "Service", "name": "Freelance digital marketing in Dubai", "serviceType": "Digital Marketing", "url": SITE + "/freelance-digital-marketer-dubai",
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
     "description": DESCS['freelance-dubai']}, PERSON, _faqnode(_page_faq('freelance-dubai')), _crumbs(("Freelance digital marketer in Dubai", SITE + "/freelance-digital-marketer-dubai")))
-FAVICON = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#121211">'
+FAVICON = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png"><link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#121211">'
 FILES = {'thanks': 'thanks', 'notfound': '404'}
 POST_IDS = {x['id'] for x in POSTS}
 POST_CAT = {x['id']: x['category'] for x in POSTS}
@@ -530,7 +530,7 @@ for p in pages + ['thanks', 'notfound']:
 '''
     os.makedirs(os.path.dirname(os.path.join(H, fname + '.html')), exist_ok=True)
     open(os.path.join(H, fname + '.html'), 'w', encoding='utf-8').write(html)
-for f in ['favicon-32.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']:
+for f in ['favicon.ico', 'favicon-32.png', 'favicon-48.png', 'favicon-96.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']:
     shutil.copy(os.path.join(SRC, 'brand', f), os.path.join(H, f))
 os.makedirs(os.path.join(H, 'img', 'brand'), exist_ok=True)
 for f in ['mark.svg', 'mark-lime.svg', 'logo-mark-1024.png', 'wa-glyph-white.svg', 'wa-glyph-green.svg']:
