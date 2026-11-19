@@ -69,7 +69,8 @@ for _p in POSTS:
 <!--/PAGE-->
 """
 # ---- service pages and case studies (data in src/landing.py) ----
-from landing import SERVICE_PAGES, CASE_STUDIES, ROAS_NOTE
+from landing import SERVICE_PAGES, CASE_STUDIES, ROAS_NOTE, KANNUR_PAGES
+SERVICE_PAGES = SERVICE_PAGES + KANNUR_PAGES
 SVC_BY = {s['id']: s for s in SERVICE_PAGES}
 CS_BY = {c['id']: c for c in CASE_STUDIES}
 def _faq_html(items):
@@ -85,11 +86,22 @@ for _s in SERVICE_PAGES:
     _for = ''.join(f'<li>{x}</li>' for x in _s['for'])
     _roas = f'<div class="also">{{{{i:chart}}}}<span><b>About the ROAS figure:</b> {ROAS_NOTE}</span></div>' if _s['roas'] else ''
     _rel = ' · '.join(f'<a class="v link" href="@{r}">{SVC_BY[r]["name"]}</a>' for r in _s['related'])
+    _kn = _s.get('kannur')
+    _crumb_mid = '<a href="@kannur">Kannur</a>' if _kn else '<a href="@services">Services</a>'
+    _areas = ('<span class="pill plain">All of Kannur district</span><a class="pill plain" href="@payyanur">Payyanur</a><a class="pill plain" href="@kozhikode">Kozhikode</a><a class="pill plain" href="@kerala">Anywhere in Kerala</a>'
+              if _kn else '<span class="pill plain">Dubai &amp; the UAE</span><a class="pill plain" href="@kerala">Anywhere in Kerala</a><a class="pill plain" href="@freelance-dubai">Freelance &amp; project work</a>')
+    _local = (f'''<section class="block">
+  <div class="split-head"><h2>{_s['local_h']}</h2><p class="muted"><a class="v link" href="@kannur">Digital marketing in Kannur</a></p></div>
+  <div class="kintro" style="max-width:820px">{''.join(f'<p>{x}</p>' for x in _s['local'])}</div>
+</section>
+
+<div class="gap"></div>
+''' if _kn else '')
     _gen += f"""
 <!--PAGE:{_s['id']}-->
 <section class="block page-hero">
   <div class="left">
-    <div class="crumbs"><a href="@home">Home</a><span>/</span><a href="@services">Services</a><span>/</span><span>{_s['crumb']}</span></div>
+    <div class="crumbs"><a href="@home">Home</a><span>/</span>{_crumb_mid}<span>/</span><span>{_s['crumb']}</span></div>
     <span class="pill">{_s['pill']}</span>
     <h1>{_s['h1']}</h1>
   </div>
@@ -102,10 +114,10 @@ for _s in SERVICE_PAGES:
 
 <div class="gap"></div>
 
-<section class="block">
+{_local}<section class="block">
   <div class="split-head"><h2>{_s['incl_h']}</h2><p class="muted">{_s['incl_p']}</p></div>
   <div class="xgrid x3">{_cells}</div>
-  <div class="areas"><span class="label">Available for</span><span class="pill plain">Dubai &amp; the UAE</span><a class="pill plain" href="@kerala">Anywhere in Kerala</a><a class="pill plain" href="@freelance-dubai">Freelance &amp; project work</a></div>
+  <div class="areas"><span class="label">Available for</span>{_areas}</div>
 </section>
 
 <div class="gap"></div>
@@ -483,8 +495,10 @@ AREAS = [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "Unite
 for _s in SERVICE_PAGES:
     _u = SITE + '/' + _s['slug']
     LD[_s['id']] = _ld({"@type": "Service", "name": _s['name'], "serviceType": _s['name'], "url": _u, "description": _s['desc'],
-                        "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": AREAS},
-                       PERSON, _faqnode(_s['faq']), _crumbs(("Services", SITE + "/services"), (_s['crumb'], _u)))
+                        "provider": {"@id": "https://abhishekreally.com/#person"},
+                        "areaServed": [{"@type": "City", "name": "Kannur"}, {"@type": "City", "name": "Payyanur"}, {"@type": "State", "name": "Kerala"}] if _s.get('kannur') else AREAS},
+                       PERSON, _faqnode(_s['faq']),
+                       _crumbs(("Digital marketing in Kannur", SITE + "/digital-marketing-kannur"), (_s['crumb'], _u)) if _s.get('kannur') else _crumbs(("Services", SITE + "/services"), (_s['crumb'], _u)))
 LD['case-studies'] = _ld({"@type": "CollectionPage", "url": SITE + "/case-studies", "name": "Case studies", "about": {"@id": "https://abhishekreally.com/#person"},
     "hasPart": [{"@type": "Article", "headline": _strip(c['h1']), "url": SITE + '/' + c['slug']} for c in CASE_STUDIES]}, PERSON, _crumbs(("Case studies", SITE + "/case-studies")))
 for _c in CASE_STUDIES:
