@@ -34,7 +34,7 @@ RELATED = {
   'meta-ads-dubai-real-estate': ['services', 'clients', 'about'],
   'google-business-profile': ['payyanur', 'kannur', 'google-first-page'],
 }
-REL_LABEL = {'payyanur': 'Digital marketer in Payyanur', 'kannur': 'Digital marketing strategist in Kannur', 'kozhikode': 'Digital marketing strategist in Kozhikode (Calicut)',
+REL_LABEL = {'payyanur': 'Digital marketer in Payyanur', 'kannur': 'Digital marketing specialist in Kannur', 'kozhikode': 'Digital marketing strategist in Kozhikode (Calicut)',
              'services': 'Digital marketing services in Dubai: Meta Ads, content and lead generation', 'clients': 'Brands I’ve helped grow in the UAE and India',
              'about': 'About Abhishek Prakash', **{p['id']: p['title'] for p in POSTS}}
 def _related(pid):
@@ -324,20 +324,20 @@ os.makedirs(OUT, exist_ok=True)
 
 # ---- artifact: one file, hash-routed pages ----
 TITLES = {'thanks': 'Thank you | Abhishek Prakash', 'notfound': 'Page not found | Abhishek Prakash',
-  'home': 'Abhishek Prakash | Digital Marketing Specialist in Dubai',
+  'home': 'Abhishek Prakash | Digital Marketing Specialist, Kerala & Dubai',
   'about': 'About Abhishek Prakash, Digital Marketing Strategist, Dubai',
   'services': 'Meta Ads & Digital Marketing Services in Dubai | Abhishek',
   'clients': 'Clients & Brands | Abhishek Prakash, Digital Marketer Dubai',
-  'kannur': 'Digital Marketing Strategist in Kannur | Abhishek Prakash',
+  'kannur': 'Digital Marketing Specialist in Kannur | Abhishek Prakash',
   'kozhikode': 'Digital Marketing Strategist in Kozhikode & Calicut',
   'blog': 'Digital Marketing Blog | Abhishek Prakash',
   'contact': 'Hire a Digital Marketing Expert in Dubai | Abhishek Prakash'}
 DESCS = {
-  'home': 'Dubai-based digital marketing specialist and Meta Ads expert with 7+ years across India and the UAE. Performance marketing, SMM, content and lead generation.',
+  'home': 'Abhishek Prakash, digital marketing specialist for Kerala and Dubai businesses: Meta Ads, social media, SEO, content and lead generation. 7+ years, India & UAE.',
   'about': 'Abhishek Prakash built a 3.2M-follower travel page and now leads performance marketing and content for brands in Dubai, the UAE and India.',
   'services': 'Digital marketing services in Dubai: Meta Ads, social media marketing (SMM), content and video, influencer marketing, lead generation, Google Ads and SEO.',
   'clients': 'Brands grown by Dubai digital marketer Abhishek Prakash: Zee Real Estate, Modus D3, Ethra, Unicorn Bakes, WrapShap, The District and more.',
-  'kannur': 'Digital marketing strategist for businesses in Kannur, Kerala: Meta Ads, social media marketing, SEO and lead generation. Brands grown in Payyanur since 2020.',
+  'kannur': 'Digital marketing specialist for Kannur businesses: Meta Ads, social media, SEO and lead generation. Payyanur brands grown since 2020. Case studies and FAQs.',
   'kozhikode': 'Digital marketing strategist for Kozhikode (Calicut) businesses: Meta Ads, social media, content, SEO and lead generation, with 7+ years across Kerala and UAE.',
   'contact': 'Hire a freelance digital marketing expert in Dubai for Meta Ads, social media marketing, content and lead generation. Replies within 24 hours.',
 }
@@ -413,7 +413,7 @@ LLMS_INTRO = """# Abhishek Prakash
 - Contact: abhisheksayyy@gmail.com, +971 58 861 5423 (phone and WhatsApp), https://abhishekreally.com/contact
 - Profiles: https://www.linkedin.com/in/prakashabhishek, https://www.instagram.com/abhishekdigitaluae/
 """
-SITE_UPDATED = '2026-11-17'   # bump when page content changes (sitemap lastmod, article dateModified)
+SITE_UPDATED = '2026-11-19'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
   "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
 def _ld(*nodes):
@@ -451,7 +451,7 @@ _kp = grab('PAGE', 'kannur')
 _kfaq = [(_html.unescape(re.sub('<[^>]+>', '', q)).strip(), _html.unescape(re.sub('<[^>]+>', '', a)).strip()) for q, a in re.findall(r'<summary><span class="q">Q\d+</span>(.*?)<span class="pm"></span></summary><div class="ans">(.*?)</div>', _kp, re.S)]
 LD['kannur'] = _ld(
   {"@type": "Service", "name": "Digital marketing in Kannur", "serviceType": "Digital Marketing", "provider": {"@id": "https://abhishekreally.com/#person"},
-   "areaServed": [{"@type": "City", "name": n} for n in ["Kannur", "Payyanur", "Thalassery", "Taliparamba", "Kozhikode"]] + [{"@type": "State", "name": "Kerala"}],
+   "areaServed": [{"@type": "City", "name": n} for n in ["Kannur", "Payyanur", "Kozhikode"]] + [{"@type": "State", "name": "Kerala"}],
    "description": DESCS['kannur']},
   {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://abhishekreally.com/"}, {"@type": "ListItem", "position": 2, "name": "Digital Marketing in Kannur", "item": "https://abhishekreally.com/digital-marketing-kannur"}]},
   PERSON,
@@ -498,7 +498,7 @@ LD['kerala'] = _ld({"@type": "Service", "name": "Digital marketing in Kerala", "
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "State", "name": "Kerala"}] + [{"@type": "City", "name": n} for n in ["Kannur", "Kozhikode", "Kochi", "Thrissur", "Malappuram", "Thiruvananthapuram"]],
     "description": DESCS['kerala']}, PERSON, _faqnode(_page_faq('kerala')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala")))
 LD['payyanur'] = _ld({"@type": "Service", "name": "Digital marketing in Payyanur", "serviceType": "Digital Marketing", "url": SITE + "/digital-marketing-payyanur",
-    "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": n} for n in ["Payyanur", "Kannur", "Taliparamba", "Cheruvathur"]] + [{"@type": "State", "name": "Kerala"}],
+    "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": n} for n in ["Payyanur", "Kannur", "Kasaragod"]] + [{"@type": "State", "name": "Kerala"}],
     "description": DESCS['payyanur']}, PERSON, BUSINESS, _faqnode(_page_faq('payyanur')), _crumbs(("Digital marketing in Kerala", SITE + "/digital-marketing-expert-kerala"), ("Payyanur", SITE + "/digital-marketing-payyanur")))
 LD['freelance-dubai'] = _ld({"@type": "Service", "name": "Freelance digital marketing in Dubai", "serviceType": "Digital Marketing", "url": SITE + "/freelance-digital-marketer-dubai",
     "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
