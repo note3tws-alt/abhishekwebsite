@@ -112,6 +112,7 @@
     var t=add('','bot typing','<span></span><span></span><span></span>');
     fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString()})
       .then(function(r){t.remove();if(!r.ok)throw new Error(r.status);
+        try{if(typeof gtag==='function')gtag('event','generate_lead',{method:'chat_assistant'});}catch(e){}
         add('Thanks, '+lead.name.split(' ')[0]+'! Your message has been sent to Abhishek. He replies within 24 hours.');
         offerDirect('Want a faster reply? You can also message him directly:');})
       .catch(function(){t.remove();offerDirect('I couldn’t send that automatically. Please tap below to send it to Abhishek directly:');});

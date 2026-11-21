@@ -160,6 +160,18 @@
     });
   });
 
+
+  /* analytics events (GA4; does nothing when the tag is not on the page) */
+  function track(name,params){try{if(typeof gtag==='function')gtag('event',name,params||{});}catch(e){}}
+  doc.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;
+    var h=a.getAttribute('href')||'',page=location.pathname;
+    if(h.indexOf('wa.me/')>-1||h.indexOf('api.whatsapp.com')>-1)track('whatsapp_click',{page_path:page,link_text:(a.textContent||'').trim().slice(0,40)});
+    else if(h.indexOf('tel:')===0)track('phone_click',{page_path:page});
+    else if(h.indexOf('mailto:')===0)track('email_click',{page_path:page});
+  });
+  if(location.pathname.indexOf('/thanks')===0)track('generate_lead',{method:'contact_form'});
+
   /* contact form */
   var form=doc.getElementById('contact-form');
   if(form){

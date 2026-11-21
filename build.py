@@ -330,6 +330,8 @@ def links(s, mode):
         return 'href="%s"' % url_for(p)
     return re.sub(r'href="@([\w-]+)"', rep, s)
 
+GA_ID = ''   # GA4 measurement ID (G-XXXXXXXXXX). Empty = no tracking tag.
+GA_TAG = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag("js",new Date());gtag("config","{GA_ID}",{{"anonymize_ip":true}});</script>' if GA_ID else '')
 FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
 DESC = 'Abhishek Prakash, Dubai-based digital marketing specialist with 7+ years across India and the UAE: Meta Ads, performance marketing and content.'
 os.makedirs(OUT, exist_ok=True)
@@ -550,6 +552,7 @@ for p in pages + ['thanks', 'notfound']:
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{TITLES[p]}</title>
 <script>document.documentElement.classList.add('rv-js')</script>
+{GA_TAG}
 <meta name="description" content="{DESCS.get(p, DESC)}">
 {FONT}
 {FAVICON}
