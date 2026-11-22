@@ -31,7 +31,7 @@ SERVICE_PAGES = [
  'steps': [('Audit and plan', 'I look at what you’ve run before, your offer and your numbers, then write the plan.'),
            ('Launch and test', 'Campaigns go live with several creatives and audiences to learn fast.'),
            ('Optimise and report', 'Budget moves to what works, and you get a clear report on results.')],
- 'proof': ['cs-unicorn-bakes', 'cs-fairmont'],
+ 'proof': ['cs-unicorn-bakes', 'cs-zee-real-estate'],
  'roas': True,
  'related': ['svc-meta-ads', 'svc-lead-generation', 'svc-consulting'],
  'faq': [
@@ -64,7 +64,7 @@ SERVICE_PAGES = [
  'steps': [('Review', 'I review your account, offer and audience, and agree on one clear goal.'),
            ('Create and launch', 'I write the concepts and scripts and launch campaigns with several creatives.'),
            ('Scale what works', 'Winning ads and audiences get more budget, and the rest are cut.')],
- 'proof': ['cs-unicorn-bakes', 'cs-fairmont', 'cs-zee-real-estate'],
+ 'proof': ['cs-unicorn-bakes', 'cs-zee-real-estate'],
  'roas': True,
  'related': ['svc-performance', 'svc-lead-generation', 'svc-content'],
  'faq': [
@@ -93,17 +93,17 @@ SERVICE_PAGES = [
    ('sliders', 'Lead quality optimisation', 'Campaigns adjusted using feedback on which leads turned into customers.'),
    ('chart', 'Cost per qualified lead', 'Reporting on qualified leads and conversions, not just form fills.'),
  ],
- 'for': ['Immigration, business setup and other consultancies', 'Real estate developers, brokers and agents in Dubai', 'Clinics, institutes and service businesses in Kerala'],
+ 'for': ['Consultancies and professional service firms', 'Real estate developers, brokers and agents in Dubai', 'Clinics, institutes and service businesses in Kerala'],
  'steps': [('Define a good lead', 'We agree on what a qualified lead looks like for your sales team.'),
            ('Build the campaign', 'Ads, forms and WhatsApp flows are set up to attract and qualify.'),
            ('Close the loop', 'Your feedback on lead quality shapes every round of optimisation.')],
- 'proof': ['cs-fairmont', 'cs-zee-real-estate'],
+ 'proof': ['cs-zee-real-estate'],
  'roas': False,
  'related': ['svc-meta-ads', 'svc-performance', 'svc-consulting'],
  'faq': [
    ('What makes a lead “qualified”?', 'A lead that matches the client you want, has a real need and budget, and answers when your team follows up. We define it together before launch.'),
    ('Lead forms or WhatsApp: which is better?', 'Both can work. Lead forms collect details at scale; click-to-WhatsApp starts a conversation straight away. I usually test both and keep what brings better customers.'),
-   ('Which industries have you generated leads for?', 'Immigration and business setup consultancy at Fairmont Project Management Services, and real estate at Zee Real Estate, both in Dubai.'),
+   ('Which industries have you generated leads for?', 'Real estate at Zee Real Estate in Dubai, plus property and land businesses in Kerala such as SAJ Realty and Land4Sale Payyanur.'),
    ('How do you measure lead generation?', 'By cost per qualified lead and how many leads become customers. Raw cost per lead alone can be misleading.'),
    ('Do you handle the follow-up calls?', 'No. Your sales team owns the follow-up. I make sure leads reach them quickly with the details they need, and use their feedback to improve the campaigns.'),
  ],
@@ -168,7 +168,7 @@ SERVICE_PAGES = [
  'faq': [
    ('Do you film and edit the videos yourself?', 'I write the scripts, plan the shoots and manage the editors. At Zee Real Estate this was done with the Modus D3 creative team; for other clients it can be your team or freelancers I coordinate.'),
    ('Can you write scripts for ads as well as organic content?', 'Yes. Ad scripts are written for the first few seconds and a clear call to action; organic scripts focus on value and shareability.'),
-   ('Which industries have you created content for?', 'Real estate, consultancy, cakes and pastries, beauty and salons, and travel, across the UAE and India.'),
+   ('Which industries have you created content for?', 'Real estate, cakes and pastries, beauty and salons, and travel, across the UAE and India.'),
    ('How far ahead do you plan content?', 'Usually a month at a time, with room for timely posts and campaign launches.'),
  ],
 },
@@ -194,7 +194,7 @@ SERVICE_PAGES = [
  'steps': [('Listen', 'We talk through your business, goals, numbers and current marketing.'),
            ('Review', 'I review your accounts, pages and funnel.'),
            ('Recommend', 'You get clear recommendations and a prioritised plan.')],
- 'proof': ['cs-zee-real-estate', 'cs-fairmont'],
+ 'proof': ['cs-zee-real-estate'],
  'roas': False,
  'related': ['svc-performance', 'svc-meta-ads', 'svc-lead-generation'],
  'faq': [
@@ -275,40 +275,6 @@ CASE_STUDIES = [
 <li>A steady content calendar keeps the brand in mind between occasions.</li>
 </ul>
 <p>Running a business in Kannur or elsewhere in Kerala? See <a href="@kannur">digital marketing in Kannur</a> or <a href="@kerala">my work across Kerala</a>.</p>
-''',
-},
-{
- 'id': 'cs-fairmont', 'slug': 'case-studies/fairmont', 'crumb': 'Fairmont',
- 'name': 'Fairmont Project Management Services', 'years': '2025 – 2026', 'where': 'Dubai, UAE', 'role': 'Digital marketing, lead generation and performance advertising',
- 'channels': 'Meta Ads, lead generation', 'logo': None,
- 'seo_title': 'Case Study: Lead Generation for a Dubai Consultancy',
- 'desc': 'How Abhishek Prakash ran Meta Ads lead generation for Fairmont Project Management Services, an immigration and business setup consultancy in Dubai.',
- 'excerpt': 'Meta Ads lead generation for an immigration and business setup consultancy in Dubai.',
- 'h1': 'Fairmont: <span class="ghost">lead generation for a Dubai consultancy.</span>',
- 'lead': 'From 2025 to 2026 I ran digital marketing, lead generation and performance advertising for Fairmont Project Management Services, an immigration and business setup consultancy in Dubai.',
- 'body': '''
-<h2>The context</h2>
-<p>Fairmont Project Management Services is a Dubai consultancy for immigration and business setup. In this kind of business, what matters is reaching people with a real plan and getting them to talk to the team.</p>
-<h2>My role</h2>
-<p>I planned and ran the Meta Ads campaigns and the lead-generation strategy, and created the advertising concepts. Handling enquiries, consultations and closing clients was the consultancy team’s work.</p>
-<h2>What I did</h2>
-<ul>
-<li>Planned and executed Meta Ads campaigns</li>
-<li>Developed lead-generation strategies for immigration and business setup services</li>
-<li>Created advertising concepts and marketing creatives</li>
-<li>Optimised campaigns to improve lead quality and conversions</li>
-<li>Analysed campaign performance and improved return on ad spend</li>
-</ul>
-<h2>The outcome</h2>
-<p>Lead quality, conversions and return on ad spend improved for the consultancy’s immigration and business setup services.</p>
-<p><strong>A note on numbers:</strong> the consultancy’s lead and revenue figures belong to the business, so no specific statistic is published for this project.</p>
-<h2>Lessons for service businesses</h2>
-<ul>
-<li>Define a qualified lead with the sales team before launch.</li>
-<li>Use the ad and the form to filter, not just to attract.</li>
-<li>Judge campaigns on cost per qualified lead, not raw cost per lead.</li>
-</ul>
-<p>More on how I approach this: <a href="@svc-lead-generation">lead generation</a>.</p>
 ''',
 },
 {
@@ -450,7 +416,7 @@ KANNUR_PAGES = [
  'steps': [('Review', 'I review your account, offer and audience, and agree on one clear goal.'),
            ('Create and launch', 'I write the concepts and scripts and launch campaigns with several creatives.'),
            ('Scale what works', 'Winning ads and audiences get more budget, and the rest are cut.')],
- 'proof': ['cs-unicorn-bakes', 'cs-fairmont', 'cs-zee-real-estate'],
+ 'proof': ['cs-unicorn-bakes', 'cs-zee-real-estate'],
  'roas': True,
  'related': ['kn-social', 'kn-seo', 'kn-google-ads'],
  'faq': [
@@ -486,7 +452,7 @@ KANNUR_PAGES = [
  'steps': [('Check the demand', 'I look at whether people search for what you sell before any budget is spent.'),
            ('Build and track', 'Campaigns, ads and conversion tracking set up for one clear goal.'),
            ('Optimise and report', 'Budget moves to what brings enquiries, and you get a clear report.')],
- 'proof': ['cs-fairmont', 'cs-unicorn-bakes'],
+ 'proof': ['cs-unicorn-bakes'],
  'roas': False,
  'related': ['kn-meta-ads', 'kn-seo', 'kn-social'],
  'faq': [

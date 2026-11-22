@@ -366,7 +366,7 @@ DESCS['freelance-dubai'] = 'Freelance digital marketer in Dubai for Meta Ads, le
 TITLES['payyanur'] = 'Digital Marketer in Payyanur, Kannur | Abhishek Prakash'
 DESCS['payyanur'] = 'Digital marketer for Payyanur businesses: Meta Ads, Instagram, content and lead generation. Worked with Unicorn Bakes, Brandvo Digital and Land4Sale Payyanur.'
 TITLES['case-studies'] = 'Digital Marketing Case Studies | Abhishek Prakash'
-DESCS['case-studies'] = 'Case studies from Abhishek Prakash: @TheWorldStories (3.2M followers), Unicorn Bakes, Fairmont and Zee Real Estate, with role and team work kept separate.'
+DESCS['case-studies'] = 'Case studies from Abhishek Prakash: @TheWorldStories (3.2M followers), Unicorn Bakes and Zee Real Estate, with role and team work kept separate.'
 
 body = ''.join(f'<div data-page="{p}" data-title="{TITLES.get(p, "Abhishek Prakash")}">{fill(grab("PAGE", p))}</div>' for p in pages)
 import base64 as _b64
@@ -420,14 +420,14 @@ LLMS_INTRO = """# Abhishek Prakash
 - Services: Meta Ads (Facebook and Instagram ads), performance marketing, Google Ads, SEO, social media marketing, content strategy and video scripts, lead generation, Google Business Profile and local SEO, marketing consulting.
 - Results: an average 10-15X ROAS on Meta Ads across the brands he manages. 12+ brands grown across the UAE and India.
 - Built @TheWorldStories, a travel page on Twitter he created in 2011 that grew to 3.2M+ followers and was the most-followed travel page on Twitter in 2016 (archived: https://web.archive.org/web/20170726141138/twitter.com/theworldstories).
-- Experience: Unicorn Bakes, Payyanur (2020-2024, digital marketing and social media growth); Fairmont Project Management Services, Dubai (2025-2026, lead generation and performance advertising); Head of Marketing at Zee Real Estate and Modus D3, Dubai (Aug-Oct 2026).
+- Experience: Unicorn Bakes, Payyanur (2020-2024, digital marketing and social media growth); Head of Marketing at Zee Real Estate and Modus D3, Dubai (Aug-Oct 2026).
 - Clients include Zee Real Estate, Modus D3, Brandvo Digital, Ethra, SAJ Realty, Ruyah by Naas, Unicorn Bakes, K1 Kitchen Gallery, WrapShap, Auto Jota, The District and Land4Sale Payyanur.
 - Education: Post Graduate Program in Digital Marketing, Digital Academy 360 (2023); Bachelor of Business Management (BBM), 2014-2017.
 - Google Business Profile: Abhishek Prakash | Digital Marketer in Payyanur (Edat, Payyanur, Kerala 670327): https://g.page/r/Ccn8e79FhoryEBM
 - Contact: abhisheksayyy@gmail.com, +971 58 861 5423 (phone and WhatsApp), https://abhishekreally.com/contact
 - Profiles: https://www.linkedin.com/in/prakashabhishek, https://www.instagram.com/abhishekdigitaluae/
 """
-SITE_UPDATED = '2026-11-19'   # bump when page content changes (sitemap lastmod, article dateModified)
+SITE_UPDATED = '2026-11-22'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
   "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
 def _ld(*nodes):
@@ -603,6 +603,15 @@ open(os.path.join(H, 'netlify.toml'), 'w', encoding='utf-8').write('''[build]
   to = "/case-studies.html"
   status = 200
   force = true
+# Removed case study (Nov 2026)
+[[redirects]]
+  from = "/case-studies/fairmont"
+  to = "/case-studies"
+  status = 301
+[[redirects]]
+  from = "/case-studies/fairmont.html"
+  to = "/case-studies"
+  status = 301
 [[redirects]]
   from = "/work"
   to = "/case-studies"

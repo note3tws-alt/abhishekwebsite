@@ -71,9 +71,8 @@ Keep all copy consistent with these. Do not invent clients, numbers, testimonial
 - **Journey (in this order):**
   - **2011–18 · @TheWorldStories** — travel page on Twitter he created in 2011; grew to 3.2M+ followers; the most-followed travel page on Twitter in 2016; suspended in Twitter's 2018 purge. Proof: Wayback Machine capture https://web.archive.org/web/20170726141138/twitter.com/theworldstories (display name "Travel Scenes", 3.21M followers, 60.3K tweets, 13.7K following, 26 July 2017). Hero card wording he asked for: "Built @TheWorldStories, the most-followed travel page on Twitter, from scratch."
   - **2020–24 · Unicorn Bakes** (India, Payyanur) — complete digital marketing and social media growth.
-  - **2025–26 · Fairmont Project Management Services** (Dubai) — immigration and business setup consultancy; lead generation and performance advertising.
   - **Aug–Oct 2026 · Zee Real Estate & Modus D3** (Dubai) — Head of Marketing. **Past tense.** Modus D3 (Modus D3 Advertising Agency L.L.C) is Zee's in-house design agency: advertising, branding, videography, digital publication. Never call it "Moduscube".
-- **Results:** say "an average 10–15X ROAS on Meta Ads across the brands I manage". **Do not attribute ROAS to a specific brand** and do not show the old 13X Fairmont stat.
+- **Results:** say "an average 10–15X ROAS on Meta Ads across the brands I manage". **Do not attribute ROAS to a specific brand.** Never mention Fairmont anywhere on the site (removed at Abhishek's request, 22 Nov 2026; /case-studies/fairmont 301-redirects to /case-studies).
 - **Achievement band:** 3.2M+ followers grown · 10–15X average ROAS across brands · 12+ brands grown across the UAE & India (no "Pakistan" here) · 7+ years.
 - **Education:** Post Graduate Program in Digital Marketing, Digital Academy 360 (2023); Bachelor of Business Management (BBM), 2014–2017.
 - **Clients (12, all with logos):** Zee Real Estate, Modus D3, Brandvo Digital, Ethra (perfume, UAE), SAJ Realty, Ruyah by Naas (salon & designer lounge, Kozhikode), Unicorn Bakes (Payyanur), K1 Kitchen Gallery, WrapShap (screen protectors & accessories, Pakistan), Auto Jota (auto parts), The District (co-working, Lahore), Land4Sale Payyanur.
@@ -109,7 +108,7 @@ Keep all copy consistent with these. Do not invent clients, numbers, testimonial
 - **Google Search Console:** domain property verified by DNS TXT record (keep that record if DNS moves); `https://abhishekreally.com/sitemap.xml` submitted. After big content changes, request indexing for the changed URLs.
 - Old WordPress URLs (/about/, /services/, /contact/) and /work.html redirect via netlify.toml.
 
-- **SEO build (16 Nov 2026):** Abhishek confirmed he takes work from Dubai and anywhere in Kerala, and approved case studies. Added `/digital-marketing-expert-kerala`, `/freelance-digital-marketer-dubai`, six `/services/*` pages, `/case-studies` + 4 studies, a "Work" menu item, a Locations footer column, and qualifying fields on the contact form. Nested pages are `services/x.html` next to `services.html`; netlify.toml force-rewrites `/services` and `/case-studies` to the hub pages. Case studies publish no figures other than the archived 3.21M followers.
+- **SEO build (16 Nov 2026):** Abhishek confirmed he takes work from Dubai and anywhere in Kerala, and approved case studies. Added `/digital-marketing-expert-kerala`, `/freelance-digital-marketer-dubai`, six `/services/*` pages, `/case-studies` + 3 studies (Fairmont study removed 22 Nov 2026), a "Work" menu item, a Locations footer column, and qualifying fields on the contact form. Nested pages are `services/x.html` next to `services.html`; netlify.toml force-rewrites `/services` and `/case-studies` to the hub pages. Case studies publish no figures other than the archived 3.21M followers.
 
 ## Open items
 
