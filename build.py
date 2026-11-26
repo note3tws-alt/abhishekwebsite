@@ -11,7 +11,7 @@ from posts import POSTS, DATE, DATE_LABEL
 def _card(p):
     return (f'<a class="post-card" href="@{p["id"]}"><span class="pc-cat">{p["category"]}</span>'
             f'<h3>{p["title"]}</h3><p>{p["excerpt"]}</p><span class="pc-meta">{p["read"]} · Read article {{{{i:arrow}}}}</span></a>')
-_blog_cards = ''.join(_card(p) for p in POSTS)
+_blog_cards = ''.join(_card(p) for p in reversed(POSTS))  # newest first
 _gen = f"""
 <!--PAGE:blog-->
 <section class="block page-hero">
@@ -31,12 +31,16 @@ RELATED = {
   'malappuram': ['kozhikode', 'kannur', 'services'],
   'thrissur': ['kannur', 'kozhikode', 'services'],
   'google-first-page': ['google-business-profile', 'kannur', 'services'],
-  'meta-ads-dubai-real-estate': ['services', 'clients', 'about'],
+  'meta-ads-dubai-real-estate': ['svc-meta-ads', 'freelance-dubai', 'meta-budget-uae'],
   'google-business-profile': ['payyanur', 'kannur', 'google-first-page'],
+  'freelancer-vs-agency-dubai': ['freelance-dubai', 'svc-consulting', 'meta-budget-uae'],
+  'meta-budget-uae': ['svc-meta-ads', 'google-vs-meta-uae', 'meta-ads-dubai-real-estate'],
+  'google-vs-meta-uae': ['svc-google-ads', 'svc-meta-ads', 'meta-budget-uae'],
 }
 REL_LABEL = {'payyanur': 'Digital marketer in Payyanur', 'kannur': 'Digital marketing specialist in Kannur', 'kozhikode': 'Digital marketing strategist in Kozhikode (Calicut)',
              'services': 'Digital marketing services in Dubai: Meta Ads, content and lead generation', 'clients': 'Brands I’ve helped grow in the UAE and India',
-             'about': 'About Abhishek Prakash', **{p['id']: p['title'] for p in POSTS}}
+             'about': 'About Abhishek Prakash', 'freelance-dubai': 'Hire a freelance digital marketer in Dubai',
+             'svc-meta-ads': 'Meta Ads specialist in Dubai', 'svc-google-ads': 'Google Ads specialist in Dubai', 'svc-consulting': 'Digital marketing consultant in Dubai', **{p['id']: p['title'] for p in POSTS}}
 def _related(pid):
     ids = RELATED.get(pid, [])
     if not ids: return ''
@@ -52,7 +56,7 @@ for _p in POSTS:
     <h1>{_p['h1']}</h1>
   </div>
   <div class="right">
-    <div class="byline"><span class="me-pic sm">{{{{photo:abhishek-headshot}}}}</span><div><b>Abhishek Prakash</b><span>{DATE_LABEL} · {_p['read']}</span></div></div>
+    <div class="byline"><span class="me-pic sm">{{{{photo:abhishek-headshot}}}}</span><div><b>Abhishek Prakash</b><span>{_p.get('date_label', DATE_LABEL)} · {_p['read']}</span></div></div>
     <p>{_p['excerpt']}</p>
   </div>
 </section>
@@ -69,6 +73,7 @@ for _p in POSTS:
 <!--/PAGE-->
 """
 # ---- service pages and case studies (data in src/landing.py) ----
+from urllib.parse import quote as _q
 from landing import SERVICE_PAGES, CASE_STUDIES, ROAS_NOTE, KANNUR_PAGES
 SERVICE_PAGES = SERVICE_PAGES + KANNUR_PAGES
 SVC_BY = {s['id']: s for s in SERVICE_PAGES}
@@ -90,13 +95,23 @@ for _s in SERVICE_PAGES:
     _crumb_mid = '<a href="@kannur">Kannur</a>' if _kn else '<a href="@services">Services</a>'
     _areas = ('<span class="pill plain">All of Kannur district</span><a class="pill plain" href="@payyanur">Payyanur</a><a class="pill plain" href="@kozhikode">Kozhikode</a><a class="pill plain" href="@kerala">Anywhere in Kerala</a>'
               if _kn else '<span class="pill plain">Dubai &amp; the UAE</span><a class="pill plain" href="@kerala">Anywhere in Kerala</a><a class="pill plain" href="@freelance-dubai">Freelance &amp; project work</a>')
+    _loc_link = '<a class="v link" href="@kannur">Digital marketing in Kannur</a>' if _kn else '<a class="v link" href="@freelance-dubai">Hiring a freelance digital marketer in Dubai</a>'
+    _probs = (f'''<section class="block">
+  <div class="split-head"><h2>Problems I solve <span class="ghost">for {"Kannur" if _kn else "UAE"} businesses.</span></h2><p class="muted">If one of these sounds familiar, we should talk.</p></div>
+  <div class="xgrid why">{''.join(f'<div class="xcell">{{{{i:check}}}}<h3>{h}</h3><p>{d}</p></div>' for h, d in _s['problems'])}</div>
+</section>
+
+<div class="gap"></div>
+
+''' if _s.get('problems') else '')
     _local = (f'''<section class="block">
-  <div class="split-head"><h2>{_s['local_h']}</h2><p class="muted"><a class="v link" href="@kannur">Digital marketing in Kannur</a></p></div>
+  <div class="split-head"><h2>{_s['local_h']}</h2><p class="muted">{_loc_link}</p></div>
   <div class="kintro" style="max-width:820px">{''.join(f'<p>{x}</p>' for x in _s['local'])}</div>
 </section>
 
 <div class="gap"></div>
-''' if _kn else '')
+''' if _s.get('local') else '')
+    _wa = 'https://wa.me/971588615423?text=' + _q('Hi Abhishek, I found your ' + _s['name'] + ' page and would like to discuss my business.')
     _gen += f"""
 <!--PAGE:{_s['id']}-->
 <section class="block page-hero">
@@ -107,14 +122,14 @@ for _s in SERVICE_PAGES:
   </div>
   <div class="right">
     <p>{_s['lead']}</p>
-    <div class="btn-row"><a class="btn btn-hot" href="@contact">Discuss your project</a><a class="btn btn-line" href="@case-studies">See case studies</a></div>
+    <div class="btn-row"><a class="btn btn-hot" href="@contact">Discuss your project</a><a class="btn btn-wa" href="{_wa}" target="_blank" rel="noopener">{{{{waicon}}}}WhatsApp</a><a class="btn btn-line" href="@case-studies">See case studies</a></div>
   </div>
 </section>
 {{{{stats}}}}
 
 <div class="gap"></div>
 
-{_local}<section class="block">
+{_probs}{_local}<section class="block">
   <div class="split-head"><h2>{_s['incl_h']}</h2><p class="muted">{_s['incl_p']}</p></div>
   <div class="xgrid x3">{_cells}</div>
   <div class="areas"><span class="label">Available for</span>{_areas}</div>
@@ -197,7 +212,7 @@ for _c in CASE_STUDIES:
 </section>
 <!--/PAGE-->
 """
-_home_blog = ''.join(_card(p) for p in POSTS[:3])
+_home_blog = ''.join(_card(p) for p in reversed(POSTS[-3:]))  # three newest
 raw = raw.replace('{{home-blog}}', _home_blog)
 raw = raw.replace('\n<!--PAGE:thanks-->', _gen + '\n<!--PAGE:thanks-->', 1)
 
@@ -298,6 +313,8 @@ def logos(s, mode):
 
 PHOTO_DIR = os.path.join(SRC, 'photos')
 MIME = {'.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp'}
+HERO_SRCSET = '/img/abhishek-suit-480.webp 480w, /img/abhishek-suit-720.webp 720w, /img/abhishek-suit.jpg 1000w'
+HERO_SIZES = '(max-width: 767px) 280px, 440px'
 def photos(s, mode):
     def rep(m):
         name = m.group(1)
@@ -310,6 +327,8 @@ def photos(s, mode):
         alt = '@TheWorldStories profile picture' if name.startswith('tws') else 'Abhishek Prakash, digital marketing specialist in Dubai'
         w, h = imgsize(os.path.join(PHOTO_DIR, f))
         extra = ' fetchpriority="high"' if name == 'abhishek-suit' else ' decoding="async"'
+        if name == 'abhishek-suit' and mode != 'spa':   # responsive hero: smaller WebP files for phones (performance, LCP)
+            extra += ' srcset="%s" sizes="%s"' % (HERO_SRCSET, HERO_SIZES)
         return '<img src="%s" alt="%s" width="%d" height="%d"%s>' % (src, alt, w, h, extra)
     return re.sub(r'\{\{photo:([\w-]+)\}\}', rep, s)
 
@@ -332,24 +351,27 @@ def links(s, mode):
 
 GA_ID = 'G-3WZ931YKTM'   # GA4 measurement ID (G-XXXXXXXXXX). Empty = no tracking tag.
 GA_TAG = (f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag("js",new Date());gtag("config","{GA_ID}",{{"anonymize_ip":true}});</script>' if GA_ID else '')
-FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
+_FONT_URL = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap'
+FONT = (f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+        f'<link rel="preload" as="style" href="{_FONT_URL}"><link rel="stylesheet" href="{_FONT_URL}" media="print" onload="this.media=\'all\'">'
+        f'<noscript><link rel="stylesheet" href="{_FONT_URL}"></noscript>')
 DESC = 'Abhishek Prakash, Dubai-based digital marketing specialist with 7+ years across India and the UAE: Meta Ads, performance marketing and content.'
 os.makedirs(OUT, exist_ok=True)
 
 # ---- artifact: one file, hash-routed pages ----
 TITLES = {'thanks': 'Thank you | Abhishek Prakash', 'notfound': 'Page not found | Abhishek Prakash',
-  'home': 'Abhishek Prakash | Digital Marketing Specialist, Kerala & Dubai',
+  'home': 'Freelance Digital Marketer in Dubai | Abhishek Prakash',
   'about': 'About Abhishek Prakash, Digital Marketing Strategist, Dubai',
-  'services': 'Meta Ads & Digital Marketing Services in Dubai | Abhishek',
+  'services': 'Digital Marketing Services in Dubai | Abhishek Prakash',
   'clients': 'Clients & Brands | Abhishek Prakash, Digital Marketer Dubai',
   'kannur': 'Digital Marketing Specialist in Kannur | Abhishek Prakash',
   'kozhikode': 'Digital Marketing Strategist in Kozhikode & Calicut',
   'blog': 'Digital Marketing Blog | Abhishek Prakash',
-  'contact': 'Hire a Digital Marketing Expert in Dubai | Abhishek Prakash'}
+  'contact': 'Contact a Digital Marketing Expert in Dubai | Abhishek Prakash'}
 DESCS = {
-  'home': 'Abhishek Prakash, digital marketing specialist for Kerala and Dubai businesses: Meta Ads, social media, SEO, content and lead generation. 7+ years, India & UAE.',
+  'home': 'Abhishek Prakash, freelance digital marketer in Dubai: Meta Ads, performance marketing and lead generation for UAE brands, plus Kerala. 7+ years, 12+ brands.',
   'about': 'Abhishek Prakash built a 3.2M-follower travel page and now leads performance marketing and content for brands in Dubai, the UAE and India.',
-  'services': 'Digital marketing services in Dubai: Meta Ads, social media marketing (SMM), content and video, influencer marketing, lead generation, Google Ads and SEO.',
+  'services': 'Digital marketing services in Dubai from a freelance specialist: Meta Ads, performance marketing, lead generation, Google Ads, SEO, social media and content.',
   'clients': 'Brands grown by Dubai digital marketer Abhishek Prakash: Zee Real Estate, Modus D3, Ethra, Unicorn Bakes, WrapShap, The District and more.',
   'kannur': 'Digital marketing specialist for Kannur businesses: Meta Ads, social media, SEO and lead generation. Payyanur brands grown since 2020. Case studies and FAQs.',
   'kozhikode': 'Digital marketing strategist for Kozhikode (Calicut) businesses: Meta Ads, social media, content, SEO and lead generation, with 7+ years across Kerala and UAE.',
@@ -361,8 +383,8 @@ for _p in POSTS + SERVICE_PAGES + CASE_STUDIES:
     DESCS[_p['id']] = _p['desc']
 TITLES['kerala'] = 'Digital Marketing Expert in Kerala | Abhishek Prakash'
 DESCS['kerala'] = 'Digital marketing anywhere in Kerala: Meta Ads, social media, content and lead generation, from a strategist with Kannur roots and Dubai experience.'
-TITLES['freelance-dubai'] = 'Freelance Digital Marketer in Dubai | Abhishek Prakash'
-DESCS['freelance-dubai'] = 'Freelance digital marketer in Dubai for Meta Ads, lead generation, social media and content: by project, monthly or as a consultant. 7+ years in UAE & India.'
+TITLES['freelance-dubai'] = 'Hire a Freelance Digital Marketer in Dubai | Abhishek'
+DESCS['freelance-dubai'] = 'How hiring a freelance digital marketer in Dubai works: services, pricing models, the first 90 days, freelancer vs agency, and the questions to ask.'
 TITLES['payyanur'] = 'Digital Marketer in Payyanur, Kannur | Abhishek Prakash'
 DESCS['payyanur'] = 'Digital marketer for Payyanur businesses: Meta Ads, Instagram, content and lead generation. Worked with Unicorn Bakes, Brandvo Digital and Land4Sale Payyanur.'
 TITLES['case-studies'] = 'Digital Marketing Case Studies | Abhishek Prakash'
@@ -409,6 +431,8 @@ PERSON = {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name"
   "url": "https://abhishekreally.com/", "image": {"@type": "ImageObject", "url": "https://abhishekreally.com/img/abhishek-suit.jpg", "width": 1000, "height": 900},
   "alumniOf": {"@type": "EducationalOrganization", "name": "Digital Academy 360"}, "nationality": {"@type": "Country", "name": "India"}, "email": "mailto:abhisheksayyy@gmail.com", "telephone": "+971588615423",
   "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"},
+  "hasOccupation": {"@type": "Occupation", "name": "Freelance Digital Marketer", "occupationLocation": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
+                    "skills": "Meta Ads, performance marketing, lead generation, Google Ads, SEO, social media marketing, content strategy"},
   "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/", "https://g.page/r/Ccn8e79FhoryEBM"],
   "knowsAbout": ["Digital Marketing", "Performance Marketing", "Meta Ads", "Facebook Ads", "Instagram Ads", "Social Media Marketing", "Content Strategy", "Lead Generation", "Influencer Marketing", "Brand Positioning", "Video Content Direction", "Google Ads", "SEO", "Real Estate Marketing"]}
 LLMS_INTRO = """# Abhishek Prakash
@@ -417,6 +441,7 @@ LLMS_INTRO = """# Abhishek Prakash
 
 ## Key facts
 
+- Works as a freelance digital marketer in Dubai (by project, monthly or as a consultant) for businesses in Dubai, the wider UAE and Kerala.
 - Services: Meta Ads (Facebook and Instagram ads), performance marketing, Google Ads, SEO, social media marketing, content strategy and video scripts, lead generation, Google Business Profile and local SEO, marketing consulting.
 - Results: an average 10-15X ROAS on Meta Ads across the brands he manages. 12+ brands grown across the UAE and India.
 - Built @TheWorldStories, a travel page on Twitter he created in 2011 that grew to 3.2M+ followers and was the most-followed travel page on Twitter in 2016 (archived: https://web.archive.org/web/20170726141138/twitter.com/theworldstories).
@@ -427,7 +452,7 @@ LLMS_INTRO = """# Abhishek Prakash
 - Contact: abhisheksayyy@gmail.com, +971 58 861 5423 (phone and WhatsApp), https://abhishekreally.com/contact
 - Profiles: https://www.linkedin.com/in/prakashabhishek, https://www.instagram.com/abhishekdigitaluae/
 """
-SITE_UPDATED = '2026-11-22'   # bump when page content changes (sitemap lastmod, article dateModified)
+SITE_UPDATED = '2026-11-26'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
   "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
 def _ld(*nodes):
@@ -439,8 +464,9 @@ def _crumbs(*items):
     trail = [("Home", "https://abhishekreally.com/")] + list(items)
     return {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(trail)]}
 FAQNODE = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _faq]}
-SERVICES = ["Meta Ads & Performance Marketing", "Content Strategy & Video Production", "Social Media & Influencer Marketing", "Lead Generation & Brand Growth", "Google Ads, SEO & WordPress"]
-SERVNODE = {"@type": "ItemList", "name": "Digital marketing services in Dubai", "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": {"@type": "Service", "name": n, "serviceType": n, "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}, {"@type": "Country", "name": "India"}]}} for i, n in enumerate(SERVICES)]}
+# Dubai service pages (not the Kannur ones) as an ItemList that links each Service to its page
+SERVICES = [(s_['name'], 'https://abhishekreally.com/' + s_['slug']) for s_ in SERVICE_PAGES if not s_.get('kannur')]
+SERVNODE = {"@type": "ItemList", "@id": "https://abhishekreally.com/services#list", "name": "Digital marketing services in Dubai", "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": {"@type": "Service", "name": n, "serviceType": n, "url": u, "provider": {"@id": "https://abhishekreally.com/#person"}, "areaServed": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}, {"@type": "State", "name": "Kerala"}]}} for i, (n, u) in enumerate(SERVICES)]}
 BUSINESS = {"@type": "ProfessionalService", "@id": "https://abhishekreally.com/#business", "name": "Abhishek Prakash | Digital Marketer in Payyanur",
   "description": "Freelance digital marketing: Meta Ads, Google Ads, SEO, social media, content strategy and lead generation for businesses in Kerala and Dubai.",
   "url": "https://abhishekreally.com/digital-marketing-payyanur", "telephone": "+971588615423", "email": "abhisheksayyy@gmail.com",
@@ -450,7 +476,7 @@ BUSINESS = {"@type": "ProfessionalService", "@id": "https://abhishekreally.com/#
   "areaServed": [{"@type": "City", "name": n} for n in ["Payyanur", "Kannur", "Kozhikode", "Kasaragod"]] + [{"@type": "State", "name": "Kerala"}, {"@type": "City", "name": "Dubai"}],
   "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "19:00"}]}
 LD = {
-  'home': _ld(WEBSITE, PERSON, BUSINESS, FAQNODE),
+  'home': _ld(WEBSITE, PERSON, BUSINESS, FAQNODE, SERVNODE),
   'about': _ld({"@type": "ProfilePage", "url": "https://abhishekreally.com/about", "name": "About Abhishek Prakash", "mainEntity": {"@id": "https://abhishekreally.com/#person"}, "dateModified": SITE_UPDATED},
                PERSON, _crumbs(("About", "https://abhishekreally.com/about"))),
   'services': _ld(PERSON, SERVNODE, FAQNODE, _crumbs(("Services", "https://abhishekreally.com/services"))),
@@ -483,7 +509,7 @@ LD['blog'] = _ld({"@type": "Blog", "name": "Abhishek Prakash – Digital Marketi
   _crumbs(("Blog", "https://abhishekreally.com/blog")))
 for _p in POSTS:
     _u = "https://abhishekreally.com/" + _p['slug']
-    LD[_p['id']] = _ld({"@type": "BlogPosting", "headline": _p['title'], "description": _p['desc'], "datePublished": DATE, "dateModified": SITE_UPDATED,
+    LD[_p['id']] = _ld({"@type": "BlogPosting", "headline": _p['title'], "description": _p['desc'], "datePublished": _p.get('date', DATE), "dateModified": SITE_UPDATED,
         "author": {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name": "Abhishek Prakash", "url": "https://abhishekreally.com/about"}, "publisher": {"@id": "https://abhishekreally.com/#person"},
         "mainEntityOfPage": _u, "url": _u, "image": "https://abhishekreally.com/img/og-image.jpg", "articleSection": _p['category'], "inLanguage": "en"},
       {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://abhishekreally.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://abhishekreally.com/blog"}, {"@type": "ListItem", "position": 3, "name": _p['title'], "item": _u}]},
@@ -523,6 +549,7 @@ FAVICON = '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="
 FILES = {'thanks': 'thanks', 'notfound': '404'}
 POST_IDS = {x['id'] for x in POSTS}
 POST_CAT = {x['id']: x['category'] for x in POSTS}
+POST_DATE = {x['id']: x.get('date', DATE) for x in POSTS}
 for p in pages + ['thanks', 'notfound']:
     fname = FILES.get(p, FILE_NAMES.get(p, p))
     canon = SITE + '/' + ('' if fname == 'index' else fname)
@@ -537,12 +564,12 @@ for p in pages + ['thanks', 'notfound']:
           f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{_t}"><meta name="twitter:description" content="{_d}">'
           f'<meta name="twitter:image" content="{SITE}/img/og-image.jpg"><meta name="author" content="Abhishek Prakash">')
     if is_post:
-        og += (f'<meta property="article:published_time" content="{DATE}"><meta property="article:modified_time" content="{SITE_UPDATED}">'
+        og += (f'<meta property="article:published_time" content="{POST_DATE[p]}"><meta property="article:modified_time" content="{SITE_UPDATED}">'
                f'<meta property="article:author" content="{SITE}/about"><meta property="article:section" content="{POST_CAT[p]}">')
     if p == 'about':
         og += '<meta property="profile:first_name" content="Abhishek"><meta property="profile:last_name" content="Prakash">'
     if p == 'home':
-        og += '<link rel="preload" as="image" href="/img/abhishek-suit.jpg" fetchpriority="high">'
+        og += f'<link rel="preload" as="image" href="/img/abhishek-suit.jpg" imagesrcset="{HERO_SRCSET}" imagesizes="{HERO_SIZES}" fetchpriority="high">'
     if p in ('thanks', 'notfound'):
         og = '<meta name="robots" content="noindex">'
     html = f'''<!doctype html>

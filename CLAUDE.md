@@ -110,6 +110,8 @@ Keep all copy consistent with these. Do not invent clients, numbers, testimonial
 
 - **SEO build (16 Nov 2026):** Abhishek confirmed he takes work from Dubai and anywhere in Kerala, and approved case studies. Added `/digital-marketing-expert-kerala`, `/freelance-digital-marketer-dubai`, six `/services/*` pages, `/case-studies` + 3 studies (Fairmont study removed 22 Nov 2026), a "Work" menu item, a Locations footer column, and qualifying fields on the contact form. Nested pages are `services/x.html` next to `services.html`; netlify.toml force-rewrites `/services` and `/case-studies` to the hub pages. Case studies publish no figures other than the archived 3.21M followers.
 
+- **Dubai SEO build (26 Nov 2026):** home now targets "Freelance Digital Marketer in Dubai" (title + H1 role line, services grid linking every service page). `/freelance-digital-marketer-dubai` became the hiring guide ("Hire a freelance digital marketer in Dubai": who, ways to work, freelancer vs agency, first 90 days, industries, pricing models without prices, how to choose, FAQ). Dubai service pages got `problems` + `local` sections (rendered for any service page that has them) and a service-specific WhatsApp button. New `/services/google-ads` and `/services/seo` (Dubai). Three posts with their own `date`: freelancer vs agency, Meta Ads budget, Google vs Meta Ads. Blog index and home show newest posts first. Hero image has a WebP `srcset` (`src/photos/abhishek-suit-480/720.webp`); Google Fonts load without blocking render. Keyword-to-URL map: /mnt/project-files/seo-dubai-2026-11-26/.
+
 ## Open items
 
 - Confirm the WhatsApp number (+971 58 861 5423 assumed).
