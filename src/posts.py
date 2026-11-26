@@ -173,4 +173,148 @@ POSTS = [
 <p>Your Google Business Profile works best alongside your website and social media. Link to your website, keep your name and phone number identical everywhere, and share your profile link in Instagram bios and WhatsApp messages. Local ads on Meta and Google bring people in, and your profile turns their search into a visit.</p>
 <p>I help businesses in Kannur, Kozhikode and across Kerala get found online, from Google Business Profile and local SEO to Meta Ads and content.</p>
 '''},
+{
+ 'id': 'freelancer-vs-agency-dubai', 'slug': 'freelance-digital-marketer-vs-agency-dubai', 'category': 'Hiring',
+ 'date': '2026-11-26', 'date_label': '26 November 2026',
+ 'title': 'Freelance Digital Marketer vs Agency in Dubai: How to Choose',
+ 'h1': 'Freelance digital marketer vs agency in Dubai: <span class="ghost">how to choose.</span>',
+ 'seo_title': 'Freelance Digital Marketer vs Agency in Dubai: How to Choose',
+ 'desc': 'When a freelance digital marketer is the better choice in Dubai, when an agency is, and the questions to ask before you hire either. From a former Head of Marketing.',
+ 'excerpt': 'When one experienced freelancer beats an agency in Dubai, when it doesn’t, and ten questions to ask before you hire anyone.',
+ 'read': '7 min read',
+ 'body': '''
+<p>I have been on both sides of this decision. As a freelancer I work directly with business owners. As Head of Marketing at Zee Real Estate and Modus D3 in Dubai, I managed an in-house creative team and worked with outside suppliers. Neither model is better in general. One is better for your business at this stage, and the choice is easier when you know what each does well.</p>
+<h2>The short answer</h2>
+<p>Hire a <strong>freelance digital marketer</strong> when you need one experienced person to plan and run your marketing, mainly on one or two channels, and you want to talk to the person doing the work. Hire an <strong>agency</strong> when you need many specialists at once, high production volume, or cover for several markets and languages at the same time.</p>
+<h2>Where a freelancer is usually the better fit</h2>
+<ul>
+<li><strong>You talk to the person doing the work.</strong> No account manager passing messages to a junior media buyer. Decisions happen in one WhatsApp message.</li>
+<li><strong>Strategy and execution stay together.</strong> The person who plans the campaign also writes the scripts, builds the audiences and reads the results, so nothing gets lost between teams.</li>
+<li><strong>Lower fixed cost.</strong> You pay for the work, not for an office, a sales team and a layer of management.</li>
+<li><strong>Flexibility.</strong> A project, a monthly retainer or a few hours of consulting, scaled up or down as you grow.</li>
+</ul>
+<h2>Where an agency is usually the better fit</h2>
+<ul>
+<li><strong>Volume.</strong> If you need dozens of designed assets, several videos and a full shoot every week, one person can’t produce all of it alone.</li>
+<li><strong>Many channels at once.</strong> TV, outdoor, PR, programmatic, events and digital together need a bigger team.</li>
+<li><strong>Cover and continuity.</strong> An agency can cover holidays and sick days with other staff. A freelancer should tell you upfront how they handle that.</li>
+</ul>
+<p>Many Dubai businesses end up with a mix: a freelancer leads the strategy and the paid campaigns, while a videographer, a designer or a small production house creates assets to a brief. That is how I often work with clients.</p>
+<h2>Ten questions to ask before you hire anyone</h2>
+<ol>
+<li><strong>Can you show me real work?</strong> Campaigns, pages or accounts you ran yourself, with your role made clear. Be wary of portfolios full of big brand logos with no explanation of what the person actually did.</li>
+<li><strong>Who will do the work day to day?</strong> With an agency, ask to meet the actual media buyer.</li>
+<li><strong>Whose ad account will we use?</strong> The answer should be yours. You should own the ad account, the pixel, the page and the data.</li>
+<li><strong>Who pays the platform?</strong> Ad spend should be billed by Meta or Google to your own card or account, separate from the marketer’s fee.</li>
+<li><strong>How will you measure success?</strong> Look for cost per lead, cost per sale or return on ad spend. If the answer is only reach and likes, keep looking.</li>
+<li><strong>What will you do in the first 30 days?</strong> A good answer includes checking tracking, reviewing past campaigns and testing several creatives.</li>
+<li><strong>How do you report, and how often?</strong> You should get numbers you understand and a plain explanation of what changes next.</li>
+<li><strong>Have you worked in my industry or a similar one?</strong> Not essential, but it shortens the learning curve.</li>
+<li><strong>How do you invoice?</strong> If you need invoices from a UAE-registered business or freelancer, ask about it at the start.</li>
+<li><strong>What happens if we stop?</strong> You should keep all accounts, creatives and data, with a clean handover.</li>
+</ol>
+<h2>Red flags</h2>
+<ul>
+<li>Guaranteed rankings, guaranteed ROAS or “first page in 30 days”.</li>
+<li>Running ads from their own ad account so you never see the data.</li>
+<li>Long lock-in contracts before any results.</li>
+<li>Reports that show only impressions, reach and follower counts.</li>
+<li>Results that can’t be explained or checked.</li>
+</ul>
+<h2>What this looks like in practice</h2>
+<p>When I take on a Dubai client, the first weeks go to checking tracking, reviewing what ran before and launching several ad concepts at once. Budget then moves every week to what works. Across the brands I manage, Meta Ads average a 10–15X return on ad spend. That is an average, not a promise; lead-generation work is judged on cost per qualified lead instead.</p>
+<p>If you are weighing a freelancer against an agency, I am happy to give you an honest view of which fits your business, even if the answer is not me. <a href="@freelance-dubai">Here is how working with me as a freelance digital marketer in Dubai works.</a></p>
+'''},
+{
+ 'id': 'meta-budget-uae', 'slug': 'meta-ads-budget-dubai', 'category': 'Meta Ads',
+ 'date': '2026-11-26', 'date_label': '26 November 2026',
+ 'title': 'How Much Should You Spend on Meta Ads in Dubai? A Simple Budget Method',
+ 'h1': 'How much should you spend on Meta Ads in Dubai? <span class="ghost">A simple budget method.</span>',
+ 'seo_title': 'How Much to Spend on Meta Ads in Dubai: A Budget Method',
+ 'desc': 'A step-by-step way for UAE businesses to set a Facebook and Instagram ads budget: work back from your goal, run a test, then scale what works. With a worked example.',
+ 'excerpt': 'There is no single right number. Here is how to work out your own Meta Ads budget from your goals, with a worked example.',
+ 'read': '6 min read',
+ 'body': '''
+<p>“How much should we spend on Facebook and Instagram ads?” is the first question most Dubai business owners ask me. The honest answer is that there is no single right number. A budget that works for a perfume brand would be wrong for a real estate project or a clinic. What you can have is a method that gives you a sensible number for your business, and a way to find out quickly whether it works.</p>
+<h2>Step 1: Decide what one result is worth to you</h2>
+<p>Start with the business, not the ad platform. What is one customer worth on average, over their first purchase or the first year? What share of leads usually turn into customers? From those two numbers you can work out what you can afford to pay for one lead or one sale and still make money.</p>
+<h2>Step 2: Work backwards to a test budget</h2>
+<p>Here is an example with made-up numbers, just to show the method:</p>
+<ul>
+<li>A service business earns an average of AED 3,000 profit per new customer.</li>
+<li>About 1 in 10 qualified leads becomes a customer.</li>
+<li>So a qualified lead is worth up to AED 300 before the business loses money on it.</li>
+<li>To learn anything useful, the campaign needs enough results to compare ads and audiences. If you want around 30 qualified leads in the test, and you expect to pay well below AED 300 each, the test budget follows from that.</li>
+</ul>
+<p>Your own numbers will be different. The point is that the budget comes from your economics, not from a package price or a guess.</p>
+<h2>Step 3: Run a proper test</h2>
+<p>A test needs time and variety. For the first few weeks I usually run:</p>
+<ul>
+<li>One clear objective per campaign: leads, sales or WhatsApp conversations, not “engagement”.</li>
+<li>Three to five different creative concepts, because the creative is now the biggest lever on Meta.</li>
+<li>Tight targeting by emirate or area, and by language where it matters.</li>
+<li>Tracking checked before launch, so every lead and sale is counted.</li>
+</ul>
+<p>Avoid changing everything every day. Meta’s delivery system needs results to learn from, and constant edits reset that learning.</p>
+<h2>Step 4: Scale what works, cut what doesn’t</h2>
+<p>After the test you will know which ads and audiences bring results at a cost you can afford. Increase the budget on those gradually and pause the rest. If nothing reached your target, the problem is usually the offer, the landing experience or the follow-up, not the budget. Spending more on a campaign that doesn’t work only loses money faster.</p>
+<h2>Things that change the budget in Dubai</h2>
+<ul>
+<li><strong>Your category.</strong> Real estate, finance and clinics compete with large advertisers; a local café or salon competes with far fewer.</li>
+<li><strong>The season.</strong> Ramadan, Eid, Dubai Shopping Festival, summer and the year-end weeks all change how people behave and how busy the ad auction is.</li>
+<li><strong>Your audience size.</strong> A narrow audience, such as high-net-worth investors, costs more to reach than a broad one.</li>
+<li><strong>The offer.</strong> A strong offer brings cheaper results than any targeting trick.</li>
+</ul>
+<h2>Keep ad spend separate from the marketer’s fee</h2>
+<p>Ad spend should be billed by Meta to your own ad account, and the fee for managing it should be shown separately. That way you always know what went to the platform and what went to the person running it.</p>
+<h2>A note on results</h2>
+<p>Across the brands I manage, Meta Ads average a 10–15X return on ad spend. That is an average across e-commerce and retail campaigns, not a promise for a new account. Lead-generation campaigns are judged on cost per qualified lead instead. If you want help setting a budget for your business, <a href="@svc-meta-ads">see how I run Meta Ads in Dubai</a> or send me your numbers and I will give you an honest starting point.</p>
+'''},
+{
+ 'id': 'google-vs-meta-uae', 'slug': 'google-ads-vs-meta-ads-uae', 'category': 'Paid ads',
+ 'date': '2026-11-26', 'date_label': '26 November 2026',
+ 'title': 'Google Ads vs Meta Ads for UAE Businesses: Which Should You Start With?',
+ 'h1': 'Google Ads vs Meta Ads for UAE businesses: <span class="ghost">which should you start with?</span>',
+ 'seo_title': 'Google Ads vs Meta Ads for UAE Businesses: Where to Start',
+ 'desc': 'Google Ads capture demand; Meta Ads create it. How UAE businesses can choose where to start, with examples for real estate, clinics, e-commerce and services.',
+ 'excerpt': 'Google Ads catch people who are already searching. Meta Ads reach people who don’t know you yet. Here is how to choose where to start.',
+ 'read': '6 min read',
+ 'body': '''
+<p>Most businesses in Dubai eventually use both Google Ads and Meta Ads (Facebook and Instagram). The real question is which one to start with when the budget is limited. The answer depends on one thing more than any other: are people already searching for what you sell?</p>
+<h2>The key difference</h2>
+<ul>
+<li><strong>Google Ads capture demand.</strong> Someone types “emergency AC repair Dubai Marina” or “dental implants Dubai”. They already want something, and your ad appears at that moment.</li>
+<li><strong>Meta Ads create demand.</strong> Someone scrolling Instagram sees your new perfume, your off-plan project or your café. They weren’t looking, but the right ad makes them interested.</li>
+</ul>
+<h2>Start with Google Ads when</h2>
+<ul>
+<li>People search for your service by name, often with urgency: repairs, movers, clinics, legal and visa services, car rental.</li>
+<li>Customers compare providers before they decide, and you can win on price, speed or reviews.</li>
+<li>You have a landing page for each service, with a clear way to call or message.</li>
+</ul>
+<h2>Start with Meta Ads when</h2>
+<ul>
+<li>Your product is visual or new, so people need to see it before they want it: fashion, perfume, food, interiors, property launches.</li>
+<li>Few people search for your exact product yet.</li>
+<li>You can produce short videos regularly, because creative quality drives Meta results.</li>
+<li>You want WhatsApp conversations, which click-to-WhatsApp ads start in one tap.</li>
+</ul>
+<h2>How it plays out by industry</h2>
+<ul>
+<li><strong>Real estate:</strong> Meta usually leads for off-plan launches and investor audiences; Google catches people searching for specific communities and projects. As Head of Marketing at Zee Real Estate, I ran property campaigns mainly on Meta.</li>
+<li><strong>Clinics and services:</strong> Google often comes first, because people search when they need help; Meta then builds awareness and remarketing.</li>
+<li><strong>E-commerce and retail:</strong> Meta is usually the main channel for new customers, with Google Shopping and search capturing people who look for the brand or product by name.</li>
+<li><strong>B2B services:</strong> Google search for clear service keywords, with LinkedIn or Meta for awareness depending on the audience.</li>
+</ul>
+<h2>Using both together</h2>
+<p>The two channels help each other. Meta Ads make people aware of you; some of them later search for your name on Google. Google search data shows which phrases bring enquiries, which then shapes your Meta messaging and your website pages. Remarketing on Meta brings back people who clicked a Google ad but didn’t enquire.</p>
+<h2>Whichever you choose, get these right first</h2>
+<ul>
+<li><strong>Tracking:</strong> calls, forms and WhatsApp clicks tracked on both platforms.</li>
+<li><strong>One goal per campaign:</strong> leads or sales, not clicks or likes.</li>
+<li><strong>A page that matches the ad:</strong> the visitor should see exactly what the ad promised.</li>
+<li><strong>Fast follow-up:</strong> enquiries answered within minutes, not hours.</li>
+</ul>
+<p>Most of my experience is in Meta Ads, where I average a 10–15X return on ad spend across the brands I manage, and I add Google Ads where search demand makes sense. If you are not sure where to start, <a href="@svc-google-ads">see how I run Google Ads</a> or <a href="@svc-meta-ads">Meta Ads in Dubai</a>, or ask me and I will tell you honestly which one fits.</p>
+'''},
 ]

@@ -28,7 +28,7 @@
   function splitWords(el,cls){
     if(el.getAttribute('data-split'))return;
     el.setAttribute('data-split','1');
-    el.setAttribute('aria-label',el.textContent.replace(/\s+/g,' ').trim());
+    var full=el.textContent.replace(/\s+/g,' ').trim();  /* words below are aria-hidden; screen readers get this copy (aria-label isn't allowed on <p>) */
     var i=0;
     (function walk(node){
       Array.prototype.slice.call(node.childNodes).forEach(function(n){
@@ -43,6 +43,7 @@
         }else if(n.nodeType===1&&n.tagName!=='BR'&&n.tagName.toLowerCase()!=='svg'){walk(n);}
       });
     })(el);
+    var sr=doc.createElement('span');sr.className='sr-only';sr.textContent=full;el.appendChild(sr);
     el.classList.add(cls);
   }
   doc.querySelectorAll('.q-lead').forEach(function(el){splitWords(el,'split-hl');});
