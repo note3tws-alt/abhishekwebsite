@@ -76,7 +76,7 @@ Keep all copy consistent with these. Do not invent clients, numbers, testimonial
 - **Achievement band:** 3.2M+ followers grown · 10–15X average ROAS across brands · 12+ brands grown across the UAE & India (no "Pakistan" here) · 7+ years.
 - **Education:** Post Graduate Program in Digital Marketing, Digital Academy 360 (2023); Bachelor of Business Management (BBM), 2014–2017.
 - **Clients (12, all with logos):** Zee Real Estate, Modus D3, Brandvo Digital, Ethra (perfume, UAE), SAJ Realty, Ruyah by Naas (salon & designer lounge, Kozhikode), Unicorn Bakes (Payyanur), K1 Kitchen Gallery, WrapShap (screen protectors & accessories, Pakistan), Auto Jota (auto parts), The District (co-working, Lahore), Land4Sale Payyanur.
-- **Contact:** abhisheksayyy@gmail.com · +971 58 861 5423 (also used as the WhatsApp number — confirm with Abhishek if unsure) · LinkedIn linkedin.com/in/prakashabhishek · Instagram instagram.com/abhishekdigitaluae. X and Facebook were removed on request.
+- **Contact:** abhisheksayyy@gmail.com · +971 58 861 5423 (also used as the WhatsApp number — confirm with Abhishek if unsure) · LinkedIn linkedin.com/in/prakashabhishek · Instagram instagram.com/abhishekdigitalasia. X and Facebook were removed on request.
 - **Removed on request (don't bring back):** projects/work gallery, "Hi, Abhishek here" greeting, "Available" badges, the yellow ring graphic, blur animations, the lime full stop after "Abhishek" in the footer, "including the accounts I managed through Brandvo".
 
 ## Design system

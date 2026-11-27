@@ -433,7 +433,7 @@ PERSON = {"@type": "Person", "@id": "https://abhishekreally.com/#person", "name"
   "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"},
   "hasOccupation": {"@type": "Occupation", "name": "Freelance Digital Marketer", "occupationLocation": [{"@type": "City", "name": "Dubai"}, {"@type": "Country", "name": "United Arab Emirates"}],
                     "skills": "Meta Ads, performance marketing, lead generation, Google Ads, SEO, social media marketing, content strategy"},
-  "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitaluae/", "https://g.page/r/Ccn8e79FhoryEBM"],
+  "sameAs": ["https://www.linkedin.com/in/prakashabhishek", "https://www.instagram.com/abhishekdigitalasia/", "https://g.page/r/Ccn8e79FhoryEBM"],
   "knowsAbout": ["Digital Marketing", "Performance Marketing", "Meta Ads", "Facebook Ads", "Instagram Ads", "Social Media Marketing", "Content Strategy", "Lead Generation", "Influencer Marketing", "Brand Positioning", "Video Content Direction", "Google Ads", "SEO", "Real Estate Marketing"]}
 LLMS_INTRO = """# Abhishek Prakash
 
@@ -450,9 +450,9 @@ LLMS_INTRO = """# Abhishek Prakash
 - Education: Post Graduate Program in Digital Marketing, Digital Academy 360 (2023); Bachelor of Business Management (BBM), 2014-2017.
 - Google Business Profile: Abhishek Prakash | Digital Marketer in Payyanur (Edat, Payyanur, Kerala 670327): https://g.page/r/Ccn8e79FhoryEBM
 - Contact: abhisheksayyy@gmail.com, +971 58 861 5423 (phone and WhatsApp), https://abhishekreally.com/contact
-- Profiles: https://www.linkedin.com/in/prakashabhishek, https://www.instagram.com/abhishekdigitaluae/
+- Profiles: https://www.linkedin.com/in/prakashabhishek, https://www.instagram.com/abhishekdigitalasia/
 """
-SITE_UPDATED = '2026-11-26'   # bump when page content changes (sitemap lastmod, article dateModified)
+SITE_UPDATED = '2026-11-27'   # bump when page content changes (sitemap lastmod, article dateModified)
 WEBSITE = {"@type": "WebSite", "@id": "https://abhishekreally.com/#website", "url": "https://abhishekreally.com/", "name": "Abhishek Prakash",
   "alternateName": "abhishekreally.com", "inLanguage": "en", "publisher": {"@id": "https://abhishekreally.com/#person"}}
 def _ld(*nodes):
